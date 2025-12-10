@@ -1,4 +1,5 @@
 import React from 'react';
+import heroVideo from '../assets/LandingPageVideo.mp4';
 
 const Hero: React.FC = () => {
     return (
@@ -38,15 +39,16 @@ const Hero: React.FC = () => {
                 </div>
             </div>
             <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-                <img
+                <video
                     className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-                    src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1950&q=80"
-                    alt="Elegant fashion model in nature"
-                    loading="lazy"
+                    src={heroVideo}
+                    autoPlay
+                    loop
+                    muted
+                    playsInline
                 />
-                {/* Note: I'm using an Unsplash image as a placeholder. In production, we'd use the provided brand assets. */}
             </div>
-        </div>
+        </div >
     );
 };
 

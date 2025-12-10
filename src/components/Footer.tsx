@@ -99,7 +99,7 @@ const Footer: React.FC = () => {
                         </a>
                     </div>
                     <p className="mt-8 text-base text-gray-400 md:mt-0 md:order-1">
-                        &copy; 2024 VyBorne, Inc. All rights reserved.
+                        &copy; 2024 VyBorne, Inc. All rights reserved. <span className="text-xs text-gray-600">v1.0.1</span>
                     </p>
                 </div>
             </div>

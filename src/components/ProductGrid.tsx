@@ -55,7 +55,10 @@ const ProductGrid: React.FC = () => {
                         onMouseEnter={() => setHoveredProductId(product.id)}
                         onMouseLeave={() => setHoveredProductId(null)}
                     >
-                        <div className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-96 lg:aspect-none transition-all duration-300">
+                        <div
+                            className="w-full min-h-80 bg-gray-200 aspect-w-1 aspect-h-1 rounded-md overflow-hidden group-hover:opacity-75 lg:h-96 lg:aspect-none transition-all duration-300 cursor-pointer"
+                            onClick={() => setSelectedProduct(product)}
+                        >
                             <img
                                 src={getDisplayImage(product)}
                                 alt={product.name}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FiShoppingBag, FiMenu, FiX, FiSearch } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
+import logo from '../assets/logo.png';
 
 const Header: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,9 +24,11 @@ const Header: React.FC = () => {
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
                     <div className="flex-shrink-0 flex items-center">
-                        <span className="text-2xl font-bold text-gray-900 tracking-tight cursor-pointer">
-                            VyBorne
-                        </span>
+                        <img
+                            src={logo}
+                            alt="VyBorne Logo"
+                            className="h-12 w-auto cursor-pointer"
+                        />
                     </div>
 
                     {/* Desktop Navigation */}

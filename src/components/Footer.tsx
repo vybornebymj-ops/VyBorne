@@ -30,10 +30,10 @@ const Footer: React.FC = () => {
                     <div>
                         <h3 className="text-sm font-semibold text-gray-300 tracking-wider uppercase">Shop</h3>
                         <ul className="mt-4 space-y-4">
-                            <li><a href="#" className="text-base text-gray-400 hover:text-white">New Arrivals</a></li>
-                            <li><a href="#" className="text-base text-gray-400 hover:text-white">Best Sellers</a></li>
-                            <li><a href="#" className="text-base text-gray-400 hover:text-white">Accessories</a></li>
-                            <li><a href="#" className="text-base text-gray-400 hover:text-white">Sale</a></li>
+                            <li><button onClick={() => alert("New Arrivals coming soon!")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">New Arrivals</button></li>
+                            <li><button onClick={() => alert("Best Sellers list is being updated.")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Best Sellers</button></li>
+                            <li><button onClick={() => alert("Accessories collection launching soon.")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Accessories</button></li>
+                            <li><button onClick={() => alert("No items on sale currently.")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Sale</button></li>
                         </ul>
                     </div>
 
@@ -41,10 +41,10 @@ const Footer: React.FC = () => {
                     <div>
                         <h3 className="text-sm font-semibold text-gray-300 tracking-wider uppercase">Support</h3>
                         <ul className="mt-4 space-y-4">
-                            <li><a href="#" className="text-base text-gray-400 hover:text-white">Contact Us</a></li>
-                            <li><a href="#" className="text-base text-gray-400 hover:text-white">FAQs</a></li>
-                            <li><a href="#" className="text-base text-gray-400 hover:text-white">Shipping & Returns</a></li>
-                            <li><a href="#" className="text-base text-gray-400 hover:text-white">Privacy Policy</a></li>
+                            <li><button onClick={() => alert("Contact support: vybornebymj@gmail.com")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Contact Us</button></li>
+                            <li><button onClick={() => alert("FAQs are being compiled.")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">FAQs</button></li>
+                            <li><button onClick={() => alert("Shipping: 5-7 business days. Returns: 7 day policy.")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Shipping & Returns</button></li>
+                            <li><button onClick={() => alert("Privacy Policy: Your data is safe with us.")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Privacy Policy</button></li>
                         </ul>
                     </div>
 

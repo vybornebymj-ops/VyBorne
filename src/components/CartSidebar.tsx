@@ -3,7 +3,7 @@ import { FiX, FiTrash2, FiShoppingBag } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
 
 const CartSidebar: React.FC = () => {
-    const { isCartOpen, toggleCart, cartItems, removeFromCart, subtotal } = useCart();
+    const { isCartOpen, toggleCart, cartItems, removeFromCart, updateQuantity, subtotal } = useCart();
 
     return (
         <>
@@ -71,11 +71,26 @@ const CartSidebar: React.FC = () => {
                                                                 {item.price.toLocaleString('en-IN')}
                                                             </p>
                                                         </div>
-                                                        <p className="mt-1 text-sm text-gray-500">Sixe: {item.selectedSize}</p>
+                                                        <p className="mt-1 text-sm text-gray-500">Size: {item.selectedSize}</p>
                                                         {item.fabric && <p className="text-xs text-gray-400 mt-1">{item.fabric}</p>}
                                                     </div>
                                                     <div className="flex-1 flex items-end justify-between text-sm">
-                                                        <p className="text-gray-500">Qty {item.quantity}</p>
+                                                        <div className="flex items-center border border-gray-300 rounded-md">
+                                                            <button
+                                                                onClick={() => updateQuantity(item.id, item.selectedSize, item.quantity - 1)}
+                                                                className="px-2 py-1 hover:bg-gray-100 text-gray-600 focus:outline-none"
+                                                                disabled={item.quantity <= 1}
+                                                            >
+                                                                -
+                                                            </button>
+                                                            <span className="px-2 py-1 text-gray-900 min-w-[1.5rem] text-center">{item.quantity}</span>
+                                                            <button
+                                                                onClick={() => updateQuantity(item.id, item.selectedSize, item.quantity + 1)}
+                                                                className="px-2 py-1 hover:bg-gray-100 text-gray-600 focus:outline-none"
+                                                            >
+                                                                +
+                                                            </button>
+                                                        </div>
 
                                                         <div className="flex">
                                                             <button

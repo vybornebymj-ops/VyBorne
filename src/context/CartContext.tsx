@@ -11,6 +11,7 @@ interface CartContextType {
     isCartOpen: boolean;
     addToCart: (product: Product, size: string) => void;
     removeFromCart: (productId: string, size: string) => void;
+    updateQuantity: (productId: string, size: string, newQuantity: number) => void;
     toggleCart: () => void;
     totalItems: number;
     subtotal: number;
@@ -45,6 +46,17 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
         );
     };
 
+    const updateQuantity = (productId: string, size: string, newQuantity: number) => {
+        if (newQuantity < 1) return;
+        setCartItems((prevItems) =>
+            prevItems.map((item) =>
+                item.id === productId && item.selectedSize === size
+                    ? { ...item, quantity: newQuantity }
+                    : item
+            )
+        );
+    };
+
     const toggleCart = () => {
         setIsCartOpen((prev) => !prev);
     };
@@ -59,6 +71,7 @@ export const CartProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
                 isCartOpen,
                 addToCart,
                 removeFromCart,
+                updateQuantity,
                 toggleCart,
                 totalItems,
                 subtotal,

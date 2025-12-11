@@ -1,5 +1,6 @@
 import Header from './components/Header';
 import About from './components/About';
+import CategorySection from './components/CategorySection';
 import Hero from './components/Hero';
 import ProductGrid from './components/ProductGrid';
 import Footer from './components/Footer';
@@ -14,6 +15,7 @@ function App() {
         <CartSidebar />
         <main className="flex-grow">
           <Hero />
+          <CategorySection />
           <About />
           <ProductGrid />
         </main>

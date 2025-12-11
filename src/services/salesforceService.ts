@@ -44,6 +44,42 @@ const MOCK_PRODUCTS: Product[] = [
         category: 'Dresses',
         fabric: 'Lyra',
         sizes: ['S', 'M', 'L', 'XL']
+    },
+    {
+        id: '4',
+        name: 'Classic White Shirt',
+        description: 'Crisp white cotton shirt with modern cut.',
+        detailedDescription: 'A wardrobe essential. This crisp white shirt is tailored from high-quality cotton poplin. Features a relaxed fit, dropped shoulders, and a unique asymmetrical hemline for a modern twist.',
+        price: 1999,
+        currency: 'INR',
+        imageUrl: product1, // Reusing existing image for demo
+        category: 'Tops',
+        fabric: 'Cotton Poplin',
+        sizes: ['XS', 'S', 'M', 'L', 'XL']
+    },
+    {
+        id: '5',
+        name: 'Silk Blend Blouse',
+        description: 'Luxurious silk blend blouse in champagne.',
+        detailedDescription: 'Add a touch of luxury to your daily rotation. This blouse is crafted from a soft silk blend that drapes beautifully. Features a cowl neck and elegant cuff details.',
+        price: 2499,
+        currency: 'INR',
+        imageUrl: product2,
+        category: 'Tops',
+        fabric: 'Silk Blend',
+        sizes: ['S', 'M', 'L']
+    },
+    {
+        id: '6',
+        name: 'Summer Breeze Co-ord',
+        description: 'Matching crop top and skirt set in linen.',
+        detailedDescription: 'Effortlessly chic. This co-ord set features a cropped linen top with adjustable straps and a matching midi skirt with a side slit. Perfect for vacations and summer brunch.',
+        price: 3999,
+        currency: 'INR',
+        imageUrl: product3,
+        category: 'Co-ords',
+        fabric: 'Linen',
+        sizes: ['XS', 'S', 'M', 'L']
     }
 ];
 

@@ -3,52 +3,55 @@ import heroVideo from '../assets/LandingPageVideo.mp4';
 
 const Hero: React.FC = () => {
     return (
-        <div className="relative bg-gray-50 overflow-hidden">
-            <div className="max-w-7xl mx-auto">
-                <div className="relative z-10 pb-8 bg-gray-50 sm:pb-16 md:pb-20 lg:max-w-2xl lg:w-full lg:pb-28 xl:pb-32">
+        <div className="relative h-screen w-full overflow-hidden">
+            {/* Video Background */}
+            <video
+                className="absolute inset-0 w-full h-full object-cover"
+                src={heroVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+            />
 
-                    <main className="mt-10 mx-auto max-w-7xl px-4 sm:mt-12 sm:px-6 md:mt-16 lg:mt-20 lg:px-8 xl:mt-28">
-                        <div className="sm:text-center lg:text-left">
-                            <h1 className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl">
-                                <span className="block xl:inline">Curated elegance for</span>{' '}
-                                <span className="block text-accent xl:inline">every occasion</span>
-                            </h1>
-                            <p className="mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0">
-                                We are working with the best fabrics providers and we own our design and are proud makers right from buying fabric, designing Tech packs, to sourcing.
-                            </p>
-                            <div className="mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start">
-                                <div className="rounded-md shadow">
-                                    <a
-                                        href="#shop"
-                                        className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-accent hover:bg-green-700 md:py-4 md:text-lg transition-colors duration-300"
-                                    >
-                                        Shop Collection
-                                    </a>
-                                </div>
-                                <div className="mt-3 sm:mt-0 sm:ml-3">
-                                    <a
-                                        href="#about"
-                                        className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-accent bg-gray-100 hover:bg-gray-200 md:py-4 md:text-lg transition-colors duration-300"
-                                    >
-                                        Our Story
-                                    </a>
-                                </div>
-                            </div>
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+
+            {/* Content */}
+            <div className="relative z-10 h-full flex items-center justify-center text-center px-4 sm:px-6 lg:px-8">
+                <div className="max-w-4xl mx-auto backdrop-blur-sm bg-white/10 p-8 md:p-14 rounded-2xl border border-white/20 shadow-2xl animate-fade-in-up">
+                    <h1 className="text-4xl tracking-tight font-serif font-bold text-white sm:text-5xl md:text-7xl mb-6">
+                        <span className="block mb-2">Curated Elegance</span>
+                        <span className="block text-accent-light text-3xl sm:text-4xl md:text-5xl font-sans font-light tracking-wide">
+                            For Every Occasion
+                        </span>
+                    </h1>
+
+                    <p className="mt-4 text-base text-gray-100 sm:text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
+                        We own our design and act as proud makers—from sourcing the finest fabrics to crafting every thread with purpose.
+                    </p>
+
+                    <div className="mt-10 sm:flex sm:justify-center gap-4">
+                        <div className="rounded-md shadow">
+                            <a
+                                href="#shop"
+                                className="w-full flex items-center justify-center px-8 py-4 border border-transparent text-base font-medium rounded-full text-gray-900 bg-white hover:bg-gray-100 md:text-lg transition-all duration-300 transform hover:scale-105"
+                            >
+                                Shop Collection
+                            </a>
                         </div>
-                    </main>
+                        <div className="mt-3 sm:mt-0">
+                            <a
+                                href="#about"
+                                className="w-full flex items-center justify-center px-8 py-4 border border-white text-base font-medium rounded-full text-white hover:bg-white hover:text-gray-900 md:text-lg transition-all duration-300 transform hover:scale-105"
+                            >
+                                Our Story
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className="lg:absolute lg:inset-y-0 lg:right-0 lg:w-1/2">
-                <video
-                    className="h-56 w-full object-cover sm:h-72 md:h-96 lg:w-full lg:h-full"
-                    src={heroVideo}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                />
-            </div>
-        </div >
+        </div>
     );
 };
 

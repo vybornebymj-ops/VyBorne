@@ -30,19 +30,21 @@ const About: React.FC = () => {
                             alt={`Founder's Vision ${index + 1}`}
                             className="w-full h-full object-cover animate-ken-burns"
                         />
+
                         {/* Dark Gradient Overlay for readability */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-black/30" />
+                        <div className="absolute inset-0 bg-black/60" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-black/20" />
                     </div>
                 ))}
             </div>
 
             {/* Content */}
             <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white">
-                <h2 className="text-4xl md:text-5xl font-serif text-orange-50 mb-10 tracking-wide drop-shadow-md">
+                <h2 className="text-4xl md:text-5xl font-serif text-white mb-10 tracking-wide drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                     Founder's Message
                 </h2>
 
-                <div className="prose prose-lg prose-invert mx-auto italic leading-relaxed text-gray-100">
+                <div className="prose prose-lg prose-invert mx-auto italic leading-relaxed text-gray-50 drop-shadow-md font-medium">
                     <p className="mb-8 text-xl">
                         From the very beginning, VyBorně was imagined as more than a fashion label—it was envisioned as a feeling. A feeling of confidence, elegance, and purpose woven into every thread.
                     </p>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FiX, FiCheck } from 'react-icons/fi';
+import officeDress from '../assets/founder-images/office-dress.png';
 
 const NewsletterModal: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -66,7 +67,7 @@ const NewsletterModal: React.FC = () => {
                 {/* Left Image Section */}
                 <div className="hidden md:block w-2/5 relative">
                     <img
-                        src="https://images.unsplash.com/photo-1550614000-4b9519e0z329?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                        src={officeDress}
                         alt="Fashion"
                         className="absolute inset-0 w-full h-full object-cover"
                     />

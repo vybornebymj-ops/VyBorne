@@ -26,7 +26,7 @@ const ContactSection: React.FC = () => {
                                 </div>
                                 <div className="ml-4">
                                     <h4 className="text-base font-medium text-gray-900">Email Us</h4>
-                                    <p className="mt-1 text-gray-500">hello@vyborne.com</p>
+                                    <p className="mt-1 text-gray-500">vybornebymj@gmail.com</p>
                                 </div>
                             </div>
 
@@ -35,8 +35,15 @@ const ContactSection: React.FC = () => {
                                     <FiPhone size={20} />
                                 </div>
                                 <div className="ml-4">
-                                    <h4 className="text-base font-medium text-gray-900">Call Us</h4>
-                                    <p className="mt-1 text-gray-500">+1 (555) 123-4567</p>
+                                    <h4 className="text-base font-medium text-gray-900">WhatsApp Us</h4>
+                                    <a
+                                        href="https://wa.me/919876543210"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="mt-1 text-gray-500 hover:text-accent transition-colors"
+                                    >
+                                        +91 98765 43210
+                                    </a>
                                 </div>
                             </div>
 
@@ -46,7 +53,7 @@ const ContactSection: React.FC = () => {
                                 </div>
                                 <div className="ml-4">
                                     <h4 className="text-base font-medium text-gray-900">Visit Us</h4>
-                                    <p className="mt-1 text-gray-500">123 Fashion Ave, New York, NY 10001</p>
+                                    <p className="mt-1 text-gray-500">3rd Lane, Akkayyapalem, Visakhapatnam, Andhra Pradesh</p>
                                 </div>
                             </div>
                         </div>

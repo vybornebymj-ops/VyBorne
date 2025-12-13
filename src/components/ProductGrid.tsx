@@ -72,13 +72,13 @@ const ProductGrid: React.FC = () => {
                     >
                         {/* Image Container with Actions Overlay */}
                         <div
-                            className="aspect-w-3 aspect-h-4 bg-gray-100 rounded-lg overflow-hidden relative cursor-pointer"
+                            className="aspect-[3/4] bg-gray-100 rounded-lg overflow-hidden relative cursor-pointer"
                             onClick={() => setSelectedProduct(product)}
                         >
                             <img
                                 src={product.imageUrl}
                                 alt={product.name}
-                                className="w-full h-full object-center object-cover transition-transform duration-700 group-hover:scale-105"
+                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                                 loading="lazy"
                             />
 

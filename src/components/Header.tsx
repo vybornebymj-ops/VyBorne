@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { FiShoppingBag, FiMenu, FiX, FiSearch } from 'react-icons/fi';
+import { FiShoppingBag, FiMenu, FiX, FiSearch, FiUser } from 'react-icons/fi';
 import { useCart } from '../context/CartContext';
 import logo from '../assets/logo.png';
+import LoginModal from './LoginModal';
 
 const Header: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const { toggleCart, totalItems } = useCart();
 
     const toggleMobileMenu = () => {
@@ -46,6 +48,13 @@ const Header: React.FC = () => {
 
                     {/* Icons (Cart, Search, Mobile Menu) */}
                     <div className="flex items-center space-x-4">
+                        <button
+                            aria-label="Login"
+                            className="text-gray-600 hover:text-accent p-1"
+                            onClick={() => setIsLoginModalOpen(true)}
+                        >
+                            <FiUser size={22} />
+                        </button>
                         <button aria-label="Search" className="text-gray-600 hover:text-accent p-1">
                             <FiSearch size={22} />
                         </button>
@@ -92,6 +101,11 @@ const Header: React.FC = () => {
                     </div>
                 </div>
             )}
+
+            <LoginModal
+                isOpen={isLoginModalOpen}
+                onClose={() => setIsLoginModalOpen(false)}
+            />
         </header>
     );
 };

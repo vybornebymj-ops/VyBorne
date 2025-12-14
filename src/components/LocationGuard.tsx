@@ -21,6 +21,13 @@ const LocationGuard: React.FC<LocationGuardProps> = ({ children }) => {
                 return;
             }
 
+            // Force block for testing ?simulate_geo_block=true
+            if (params.get('simulate_geo_block') === 'true') {
+                setIsAllowed(false);
+                setLoading(false);
+                return;
+            }
+
             try {
                 const response = await fetch('https://ipapi.co/json/');
                 if (!response.ok) throw new Error('Network response was not ok');

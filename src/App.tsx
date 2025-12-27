@@ -11,7 +11,15 @@ import Footer from './components/Footer';
 import CartSidebar from './components/CartSidebar';
 import { CartProvider } from './context/CartContext';
 
+import { useEffect } from 'react';
+
 function App() {
+  useEffect(() => {
+    if (window.location.pathname === '/whatsapp') {
+      window.location.href = 'https://api.whatsapp.com/send?phone=919963581446';
+    }
+  }, []);
+
   return (
     <CartProvider>
       <LocationGuard>

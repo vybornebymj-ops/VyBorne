@@ -37,12 +37,12 @@ const ContactSection: React.FC = () => {
                                 <div className="ml-4">
                                     <h4 className="text-base font-medium text-gray-900">WhatsApp Us</h4>
                                     <a
-                                        href="https://wa.me/919876543210"
+                                        href="/whatsapp"
                                         target="_blank"
                                         rel="noopener noreferrer"
                                         className="mt-1 text-gray-500 hover:text-accent transition-colors"
                                     >
-                                        +91 98765 43210
+                                        +91 9963581446
                                     </a>
                                 </div>
                             </div>

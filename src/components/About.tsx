@@ -46,7 +46,7 @@ const About: React.FC = () => {
 
                 <div className="prose prose-lg prose-invert mx-auto italic leading-relaxed text-gray-50 drop-shadow-md font-medium">
                     <p className="mb-8 text-xl">
-                        From the very beginning, VyBorně was imagined as more than a fashion label—it was envisioned as a feeling. A feeling of confidence, elegance, and purpose woven into every thread.
+                        From the very beginning, Vyborne was imagined as more than a fashion label—it was envisioned as a feeling. A feeling of confidence, elegance, and purpose woven into every thread.
                     </p>
 
                     <p className="mb-8">
@@ -56,7 +56,7 @@ const About: React.FC = () => {
                     </p>
 
                     <p className="mb-8">
-                        VyBorně was born from that question.
+                        Vyborne was born from that question.
                     </p>
 
                     <p className="mb-8">
@@ -64,7 +64,7 @@ const About: React.FC = () => {
                     </p>
 
                     <p className="mb-8">
-                        Every piece at VyBorně reflects what I care about most:
+                        Every piece at Vyborne reflects what I care about most:
                         <br />
                         <span className="text-orange-100">timeless design, thoughtful sustainability, and a deep respect for the people who craft our garments.</span>
                     </p>
@@ -77,7 +77,7 @@ const About: React.FC = () => {
 
                     <div className="bg-white/10 backdrop-blur-md rounded-xl p-8 mb-8 inline-block shadow-2xl border border-white/20">
                         <p className="mb-6 font-medium">
-                            To every woman who chooses VyBorně:<br />
+                            To every woman who chooses Vyborne:<br />
                             Thank you for believing in conscious fashion. Thank you for choosing pieces that tell a story—your story.
                         </p>
                         <p className="font-bold text-2xl text-orange-50">

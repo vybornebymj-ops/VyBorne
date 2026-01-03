@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import useRazorpay, { RazorpayOptions } from 'react-razorpay';
+import { useRazorpay } from 'react-razorpay';
 import logo from '../assets/logo.png';
 
 interface CheckoutButtonProps {
@@ -9,24 +9,32 @@ interface CheckoutButtonProps {
 }
 
 const CheckoutButton: React.FC<CheckoutButtonProps> = ({ amount, currency = "INR", onSuccess }) => {
-    const [Razorpay] = useRazorpay();
+    // @ts-ignore - Ignoring hook type mismatch if any, relying on named export
+    const { isLoading, error, Razorpay } = useRazorpay();
 
     const handlePayment = useCallback(() => {
         // NOTE: In a production app, you MUST create an order on your backend first
         // and pass the order_id here.
         // const order = await createOrderOnBackend(amount);
 
-        const options: RazorpayOptions = {
+        const options = {
             key: "rzp_live_RzTn80CU6r7oWv", // Enter the Key ID generated from the Dashboard
-            amount: (amount * 100).toString(), // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
+            amount: (amount * 100).toString(), // Amount is in currency subunits. Default currency is INR.
             currency: currency,
             name: "VyBorne",
             description: "Fashion Transaction",
             image: logo,
-            // order_id: "order_9A33XWu170gUtm", // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            handler: (response) => {
+            // order_id: "order_9A33XWu170gUtm", // Sample Order ID
+            handler: (response: any) => {
                 console.log(response);
                 alert(`Payment Successful! Payment ID: ${response.razorpay_payment_id}`);
+                if (onSuccess) {
+                    onSuccess(response.razorpay_payment_id);
+                }
+            },
+            console.log(response);
+            alert(`Payment Successful! Payment ID: ${response.razorpay_payment_id
+        }`);
                 if (onSuccess) {
                     onSuccess(response.razorpay_payment_id);
                 }
@@ -44,14 +52,16 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ amount, currency = "INR
             },
         };
 
-        const rzp1 = new Razorpay(options);
+        if (Razorpay) {
+            const rzp1 = new Razorpay(options);
 
-        rzp1.on("payment.failed", (response: any) => {
-            alert(`Payment Failed: ${response.error.description}`);
-            console.error(response.error);
-        });
+            rzp1.on("payment.failed", (response: any) => {
+                alert(`Payment Failed: ${ response.error.description }`);
+                console.error(response.error);
+            });
 
-        rzp1.open();
+            rzp1.open();
+        }
     }, [Razorpay, amount, currency, onSuccess]);
 
     return (

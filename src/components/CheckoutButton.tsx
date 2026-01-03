@@ -46,7 +46,7 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ amount, currency = "INR
         };
 
         if (Razorpay) {
-            const rzp1 = new Razorpay(options);
+            const rzp1 = new Razorpay(options as any);
 
             rzp1.on("payment.failed", (response: any) => {
                 alert(`Payment Failed: ${response.error.description}`);

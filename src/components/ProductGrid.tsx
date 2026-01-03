@@ -10,7 +10,49 @@ const ProductGrid: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
-    const [selectedCategory, setSelectedCategory] = useState('All');
+    // Initialize category from URL if present
+    const [selectedCategory, setSelectedCategory] = useState(() => {
+        if (typeof window !== 'undefined') {
+            const params = new URLSearchParams(window.location.search);
+            const categoryParam = params.get('category');
+            return categoryParam && categories.includes(categoryParam) ? categoryParam : 'All';
+        }
+        return 'All';
+    });
+
+    // Sync URL with selected category and handle initial scroll
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        const currentUrlCategory = params.get('category');
+
+        if (selectedCategory === 'All') {
+            if (currentUrlCategory) {
+                params.delete('category');
+                const newUrl = `${window.location.pathname}${params.toString() ? '?' + params.toString() : ''}`;
+                window.history.pushState({}, '', newUrl);
+            }
+        } else {
+            if (currentUrlCategory !== selectedCategory) {
+                params.set('category', selectedCategory);
+                const newUrl = `${window.location.pathname}?${params.toString()}`;
+                window.history.pushState({}, '', newUrl);
+            }
+        }
+    }, [selectedCategory]);
+
+    // Scroll to shop section on mount if category is present in URL
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('category')) {
+            // Small timeout to ensure DOM is ready and layout is stable
+            setTimeout(() => {
+                const element = document.getElementById('shop');
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 100);
+        }
+    }, []);
 
     // Derived state for filtered products
     const filteredProducts = selectedCategory === 'All'

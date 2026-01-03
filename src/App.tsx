@@ -1,3 +1,4 @@
+import MarketingBanner from './components/MarketingBanner';
 import Header from './components/Header';
 import About from './components/About';
 import CategorySection from './components/CategorySection';
@@ -24,6 +25,7 @@ function App() {
     <CartProvider>
       <LocationGuard>
         <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
+          <MarketingBanner />
           <Header />
           <CartSidebar />
           <main className="flex-grow">

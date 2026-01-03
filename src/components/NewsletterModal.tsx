@@ -8,16 +8,11 @@ const NewsletterModal: React.FC = () => {
     const [status, setStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
     useEffect(() => {
-        // Check localStorage
-        const isSubscribed = localStorage.getItem('newsletter_subscribed');
-        const hasSeen = localStorage.getItem('newsletter_seen_session'); // could use sessionStorage for per-session
-
-        if (!isSubscribed && !hasSeen) {
-            const timer = setTimeout(() => {
-                setIsOpen(true);
-            }, 2000); // Show after 2 seconds
-            return () => clearTimeout(timer);
-        }
+        // Show after 2 seconds on every load
+        const timer = setTimeout(() => {
+            setIsOpen(true);
+        }, 2000);
+        return () => clearTimeout(timer);
     }, []);
 
     const handleClose = () => {

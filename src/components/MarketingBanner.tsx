@@ -1,4 +1,3 @@
-```
 import React from 'react';
 
 const MarketingBanner: React.FC = () => {
@@ -15,4 +14,3 @@ const MarketingBanner: React.FC = () => {
 };
 
 export default MarketingBanner;
-```

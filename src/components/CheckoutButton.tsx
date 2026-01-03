@@ -32,13 +32,6 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ amount, currency = "INR
                     onSuccess(response.razorpay_payment_id);
                 }
             },
-            console.log(response);
-            alert(`Payment Successful! Payment ID: ${response.razorpay_payment_id
-        }`);
-                if (onSuccess) {
-                    onSuccess(response.razorpay_payment_id);
-                }
-            },
             prefill: {
                 name: "Test User",
                 email: "test.user@example.com",
@@ -56,7 +49,7 @@ const CheckoutButton: React.FC<CheckoutButtonProps> = ({ amount, currency = "INR
             const rzp1 = new Razorpay(options);
 
             rzp1.on("payment.failed", (response: any) => {
-                alert(`Payment Failed: ${ response.error.description }`);
+                alert(`Payment Failed: ${response.error.description}`);
                 console.error(response.error);
             });
 

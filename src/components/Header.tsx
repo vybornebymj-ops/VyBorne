@@ -80,24 +80,26 @@ const Header: React.FC = () => {
         <header className={`${headerClass} z-50 transition-all duration-300`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
-                    {/* Logo */}
+                    {/* Logo - Immersive Blend Mode Magic */}
                     <div className="flex-shrink-0 flex items-center">
                         <Link to="/">
-                            <img
-                                src={logo}
-                                alt="VyBorne Logo"
-                                className="h-10 w-auto cursor-pointer"
-                            />
+                            <div className={`relative ${isHome && !isScrolled ? 'mix-blend-screen' : ''}`}>
+                                <img
+                                    src={logo}
+                                    alt="VyBorne Logo"
+                                    className={`h-12 w-auto cursor-pointer transition-all duration-300 ${isHome && !isScrolled ? 'invert brightness-0 contrast-200' : ''}`}
+                                />
+                            </div>
                         </Link>
                     </div>
 
-                    {/* Desktop Navigation */}
-                    <nav className="hidden md:flex space-x-8">
+                    {/* Desktop Navigation - Luxury Minimalist */}
+                    <nav className="hidden md:flex space-x-10">
                         {navLinks.map((link) => (
                             <button
                                 key={link.name}
                                 onClick={() => handleNavClick(link.href)}
-                                className={`${getTextColor()} font-medium transition-colors duration-200 bg-transparent border-none cursor-pointer`}
+                                className={`${getTextColor()} text-xs uppercase tracking-[0.2em] font-medium transition-all duration-300 hover:tracking-[0.3em] bg-transparent border-none cursor-pointer`}
                             >
                                 {link.name}
                             </button>

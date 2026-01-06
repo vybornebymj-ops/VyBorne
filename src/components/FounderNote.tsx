@@ -22,7 +22,7 @@ const FounderNote: React.FC = () => {
 
                         <div className="mt-8 flex flex-col items-center">
                             <div className="w-16 h-px bg-accent mb-4"></div>
-                            <h3 className="text-xl font-medium text-gray-900 font-serif">Mouni</h3>
+                            <h3 className="text-xl font-medium text-gray-900 font-serif">Hemalatha</h3>
                             <p className="text-sm text-gray-500 uppercase tracking-wider mt-1">Founder, VyBorne</p>
                         </div>
                     </div>

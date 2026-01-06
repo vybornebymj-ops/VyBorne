@@ -15,6 +15,8 @@ import ShippingPolicy from './pages/ShippingPolicy';
 
 import Shop from './pages/Shop';
 
+import AboutPage from './pages/AboutPage';
+
 function App() {
   useEffect(() => {
     if (window.location.pathname === '/whatsapp') {
@@ -33,6 +35,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/shop" element={<Shop />} />
+              <Route path="/about" element={<AboutPage />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<TermsOfService />} />
               <Route path="/shipping" element={<ShippingPolicy />} />

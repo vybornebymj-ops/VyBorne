@@ -31,14 +31,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }) => {
                     />
                 )}
 
-                {/* Actions Overlay - Slide up bar */}
-                <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
+                {/* Actions Overlay - Slide up bar (Always visible on mobile/touch, hover on desktop) */}
+                <div className="absolute inset-x-0 bottom-0 translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300 ease-in-out z-10">
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
                             onQuickView(product);
                         }}
-                        className="w-full bg-white/90 backdrop-blur-sm text-gray-900 py-4 uppercase text-sm tracking-widest font-medium hover:bg-gray-900 hover:text-white transition-colors border-t border-gray-100"
+                        className="w-full bg-white/90 backdrop-blur-sm text-gray-900 py-3 md:py-4 uppercase text-xs md:text-sm tracking-widest font-medium hover:bg-gray-900 hover:text-white transition-colors border-t border-gray-100"
                     >
                         Quick View
                     </button>

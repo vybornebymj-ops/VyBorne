@@ -22,10 +22,10 @@ const Hero: React.FC = () => {
             <div className="relative z-10 h-full flex flex-col justify-end pb-24 px-4 sm:px-6 lg:px-12 text-center md:text-left">
                 <div className="max-w-7xl w-full mx-auto animate-fade-in-up">
                     <h1 className="text-white font-serif font-bold leading-none mb-6">
-                        <span className="block text-5xl sm:text-7xl md:text-9xl tracking-tight drop-shadow-2xl opacity-95">
+                        <span className="block text-4xl sm:text-7xl md:text-9xl tracking-tight drop-shadow-2xl opacity-95">
                             Curated Elegance
                         </span>
-                        <span className="block mt-2 text-xl sm:text-2xl md:text-3xl font-sans font-light tracking-[0.3em] uppercase text-white/80">
+                        <span className="block mt-3 text-lg sm:text-2xl md:text-3xl font-sans font-light tracking-[0.2em] uppercase text-white/80">
                             For Every Occasion
                         </span>
                     </h1>

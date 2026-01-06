@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiEye, FiShoppingBag } from 'react-icons/fi';
+import { FiEye } from 'react-icons/fi';
 import type { Product } from '../types/Product';
 
 interface ProductCardProps {

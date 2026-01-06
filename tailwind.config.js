@@ -10,7 +10,8 @@ export default {
         accent: '#059669', // Emerald Green
       },
       fontFamily: {
-        sans: ['Inter', 'sans-serif'],
+        sans: ['Lato', 'sans-serif'],
+        serif: ['"Playfair Display"', 'serif'],
       },
     },
   },

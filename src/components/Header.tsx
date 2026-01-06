@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiShoppingBag, FiMenu, FiX, FiSearch, FiUser } from 'react-icons/fi';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
@@ -54,8 +54,30 @@ const Header: React.FC = () => {
         { name: 'Contact', href: '#contact' },
     ];
 
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setIsScrolled(window.scrollY > 20);
+        };
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    const isHome = location.pathname === '/';
+    const headerClass = isHome && !isScrolled
+        ? 'fixed w-full bg-transparent text-white border-transparent'
+        : 'sticky top-0 bg-white text-gray-900 shadow-sm border-b border-gray-100';
+
+    const getTextColor = () => {
+        if (isHome && !isScrolled) return 'text-white hover:text-gray-200';
+        return 'text-gray-700 hover:text-accent';
+    };
+
+    const iconClass = isHome && !isScrolled ? 'text-white hover:text-gray-200' : 'text-gray-600 hover:text-accent';
+
     return (
-        <header className="sticky top-0 z-50 bg-white shadow-sm border-b border-gray-100">
+        <header className={`${headerClass} z-50 transition-all duration-300`}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
@@ -75,7 +97,7 @@ const Header: React.FC = () => {
                             <button
                                 key={link.name}
                                 onClick={() => handleNavClick(link.href)}
-                                className="text-gray-700 hover:text-accent font-medium transition-colors duration-200 bg-transparent border-none cursor-pointer"
+                                className={`${getTextColor()} font-medium transition-colors duration-200 bg-transparent border-none cursor-pointer`}
                             >
                                 {link.name}
                             </button>
@@ -86,7 +108,7 @@ const Header: React.FC = () => {
                     <div className="flex items-center space-x-4">
                         <button
                             aria-label="Login"
-                            className="text-gray-600 hover:text-accent p-1"
+                            className={`${iconClass} p-1 transition-colors`}
                             onClick={() => setIsLoginModalOpen(true)}
                         >
                             <FiUser size={22} />
@@ -106,14 +128,14 @@ const Header: React.FC = () => {
                             )}
                             <button
                                 aria-label="Search"
-                                className={`text-gray-600 hover:text-accent p-1 transition-colors ${isSearchOpen ? 'text-accent' : ''}`}
+                                className={`${iconClass} p-1 transition-colors ${isSearchOpen ? 'text-accent' : ''}`}
                                 onClick={() => setIsSearchOpen(!isSearchOpen)}
                             >
                                 {isSearchOpen ? <FiX size={22} /> : <FiSearch size={22} />}
                             </button>
                         </div>
                         <div
-                            className="relative cursor-pointer text-gray-600 hover:text-accent transition-colors"
+                            className={`relative cursor-pointer ${iconClass} transition-colors`}
                             onClick={toggleCart}
                         >
                             <FiShoppingBag size={22} />

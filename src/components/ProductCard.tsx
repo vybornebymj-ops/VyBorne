@@ -1,5 +1,4 @@
 import React from 'react';
-import { FiEye } from 'react-icons/fi';
 import type { Product } from '../types/Product';
 
 interface ProductCardProps {
@@ -13,7 +12,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }) => {
         <div className="group relative">
             {/* Image Container with Actions Overlay */}
             <div
-                className="aspect-[3/4] bg-gray-100 rounded-lg overflow-hidden relative cursor-pointer"
+                className="aspect-[3/4] bg-gray-100 overflow-hidden relative cursor-pointer"
                 onClick={() => onQuickView(product)}
             >
                 <img
@@ -32,31 +31,29 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }) => {
                     />
                 )}
 
-                {/* Actions Overlay */}
-                <div className="absolute inset-x-0 bottom-0 p-4 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-4 group-hover:translate-y-0 flex justify-center space-x-3">
+                {/* Actions Overlay - Slide up bar */}
+                <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-in-out">
                     <button
                         onClick={(e) => {
                             e.stopPropagation();
                             onQuickView(product);
                         }}
-                        className="p-3 bg-white rounded-full shadow-lg text-gray-900 hover:text-accent hover:scale-110 transition-all duration-200"
-                        aria-label="Quick View"
+                        className="w-full bg-white/90 backdrop-blur-sm text-gray-900 py-4 uppercase text-sm tracking-widest font-medium hover:bg-gray-900 hover:text-white transition-colors border-t border-gray-100"
                     >
-                        <FiEye size={20} />
+                        Quick View
                     </button>
-                    {/* Add to Cart could go here, or just open Quick View which leads to Add to Cart */}
                 </div>
             </div>
 
             {/* Product Info */}
-            <div className="mt-4 text-center">
-                <p className="text-xs text-gray-500 uppercase tracking-wider mb-1">{product.category}</p>
-                <h3 className="text-base font-medium text-gray-900 group-hover:text-accent transition-colors duration-200">
+            <div className="mt-5 text-center px-2">
+                <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em] mb-2">{product.category}</p>
+                <h3 className="text-lg font-serif text-gray-900 mb-1 group-hover:text-accent transition-colors duration-200">
                     <span onClick={() => onQuickView(product)} className="cursor-pointer">
                         {product.name}
                     </span>
                 </h3>
-                <p className="mt-1 text-base font-light text-gray-900">
+                <p className="text-sm text-gray-600 font-light tracking-wide">
                     {product.currency === 'INR' ? '₹' : '$'}{product.price.toLocaleString('en-IN')}
                 </p>
             </div>

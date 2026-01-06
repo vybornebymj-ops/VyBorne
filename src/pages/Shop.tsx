@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import ProductGrid from '../components/ProductGrid';
 import { fetchProducts } from '../services/salesforceService';
 import type { Product } from '../types/Product';
@@ -6,6 +7,9 @@ import type { Product } from '../types/Product';
 const categories = ['Dresses', 'Tops', 'Co-ords', 'Sarees', 'Accessories'];
 
 const Shop: React.FC = () => {
+    const [searchParams] = useSearchParams();
+    const searchQuery = searchParams.get('search') || '';
+
     const [allProducts, setAllProducts] = useState<Product[]>([]);
     const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
     const [loading, setLoading] = useState(true);
@@ -33,6 +37,16 @@ const Shop: React.FC = () => {
     useEffect(() => {
         let result = allProducts;
 
+        // Search Filter
+        if (searchQuery) {
+            const query = searchQuery.toLowerCase();
+            result = result.filter(p =>
+                p.name.toLowerCase().includes(query) ||
+                p.description?.toLowerCase().includes(query) ||
+                p.category?.toLowerCase().includes(query)
+            );
+        }
+
         // Category Filter
         if (selectedCategories.length > 0) {
             result = result.filter(p => selectedCategories.includes(p.category || ''));
@@ -42,7 +56,7 @@ const Shop: React.FC = () => {
         result = result.filter(p => p.price <= priceRange);
 
         setFilteredProducts(result);
-    }, [selectedCategories, priceRange, allProducts]);
+    }, [selectedCategories, priceRange, allProducts, searchQuery]);
 
     const toggleCategory = (cat: string) => {
         setSelectedCategories(prev =>
@@ -104,7 +118,7 @@ const Shop: React.FC = () => {
                         <ProductGrid
                             externalProducts={filteredProducts}
                             loading={loading}
-                            title={`All Products (${filteredProducts.length})`}
+                            title={searchQuery ? `Search Results for "${searchQuery}" (${filteredProducts.length})` : `All Products (${filteredProducts.length})`}
                             hideFilters={true}
                         />
                     </div>

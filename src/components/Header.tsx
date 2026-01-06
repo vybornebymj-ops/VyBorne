@@ -8,12 +8,23 @@ import LoginModal from './LoginModal';
 const Header: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    const [isSearchOpen, setIsSearchOpen] = useState(false);
+    const [searchQuery, setSearchQuery] = useState('');
     const { toggleCart, totalItems } = useCart();
     const location = useLocation();
     const navigate = useNavigate();
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    const handleSearchSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        if (searchQuery.trim()) {
+            navigate(`/shop?search=${encodeURIComponent(searchQuery.trim())}`);
+            setIsSearchOpen(false);
+            setSearchQuery('');
+        }
     };
 
     const handleNavClick = (href: string) => {
@@ -80,9 +91,27 @@ const Header: React.FC = () => {
                         >
                             <FiUser size={22} />
                         </button>
-                        <button aria-label="Search" className="text-gray-600 hover:text-accent p-1">
-                            <FiSearch size={22} />
-                        </button>
+                        <div className="relative flex items-center">
+                            {isSearchOpen && (
+                                <form onSubmit={handleSearchSubmit} className="absolute right-full mr-2">
+                                    <input
+                                        type="text"
+                                        placeholder="Search..."
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                        className="w-48 pl-3 pr-8 py-1 text-sm border border-gray-300 rounded-full focus:outline-none focus:border-accent"
+                                        autoFocus
+                                    />
+                                </form>
+                            )}
+                            <button
+                                aria-label="Search"
+                                className={`text-gray-600 hover:text-accent p-1 transition-colors ${isSearchOpen ? 'text-accent' : ''}`}
+                                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                            >
+                                {isSearchOpen ? <FiX size={22} /> : <FiSearch size={22} />}
+                            </button>
+                        </div>
                         <div
                             className="relative cursor-pointer text-gray-600 hover:text-accent transition-colors"
                             onClick={toggleCart}

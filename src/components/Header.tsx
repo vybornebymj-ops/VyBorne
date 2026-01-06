@@ -87,7 +87,7 @@ const Header: React.FC = () => {
                                 <img
                                     src={logo}
                                     alt="VyBorne Logo"
-                                    className={`h-12 w-auto cursor-pointer transition-all duration-300 ${isHome && !isScrolled ? 'invert brightness-0 contrast-200' : ''}`}
+                                    className={`h-12 w-auto cursor-pointer transition-all duration-300 ${isHome && !isScrolled ? 'invert grayscale contrast-200' : ''}`}
                                 />
                             </div>
                         </Link>

@@ -86,7 +86,7 @@ const Header: React.FC = () => {
                             <img
                                 src={logo}
                                 alt="VyBorne Logo"
-                                className="h-12 w-auto cursor-pointer"
+                                className="h-10 w-auto cursor-pointer"
                             />
                         </Link>
                     </div>

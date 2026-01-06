@@ -13,6 +13,8 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsOfService from './pages/TermsOfService';
 import ShippingPolicy from './pages/ShippingPolicy';
 
+import Shop from './pages/Shop';
+
 function App() {
   useEffect(() => {
     if (window.location.pathname === '/whatsapp') {
@@ -30,6 +32,7 @@ function App() {
           <main className="flex-grow">
             <Routes>
               <Route path="/" element={<Home />} />
+              <Route path="/shop" element={<Shop />} />
               <Route path="/privacy" element={<PrivacyPolicy />} />
               <Route path="/terms" element={<TermsOfService />} />
               <Route path="/shipping" element={<ShippingPolicy />} />

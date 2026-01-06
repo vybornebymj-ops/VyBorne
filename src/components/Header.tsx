@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { FiShoppingBag, FiMenu, FiX, FiSearch, FiUser } from 'react-icons/fi';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import logo from '../assets/logo.png';
 import LoginModal from './LoginModal';
@@ -8,14 +9,36 @@ const Header: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const { toggleCart, totalItems } = useCart();
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
     };
 
+    const handleNavClick = (href: string) => {
+        setIsMobileMenuOpen(false);
+        if (href.startsWith('#')) {
+            // If on home page, scroll
+            if (location.pathname === '/') {
+                const id = href.substring(1);
+                const element = document.getElementById(id);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            } else {
+                // If not on home page, go home then scroll (simple version: just go home)
+                navigate('/');
+                // In a real app, you'd pass the hash to navigate or use a context to scroll after nav
+            }
+        } else {
+            navigate(href);
+        }
+    };
+
     const navLinks = [
-        { name: 'Home', href: '#' },
-        { name: 'Shop', href: '#shop' },
+        { name: 'Home', href: '/' },
+        { name: 'Shop', href: '/shop' },
         { name: 'About', href: '#about' },
         { name: 'Contact', href: '#contact' },
     ];
@@ -26,23 +49,25 @@ const Header: React.FC = () => {
                 <div className="flex justify-between items-center h-16">
                     {/* Logo */}
                     <div className="flex-shrink-0 flex items-center">
-                        <img
-                            src={logo}
-                            alt="VyBorne Logo"
-                            className="h-12 w-auto cursor-pointer"
-                        />
+                        <Link to="/">
+                            <img
+                                src={logo}
+                                alt="VyBorne Logo"
+                                className="h-12 w-auto cursor-pointer"
+                            />
+                        </Link>
                     </div>
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex space-x-8">
                         {navLinks.map((link) => (
-                            <a
+                            <button
                                 key={link.name}
-                                href={link.href}
-                                className="text-gray-700 hover:text-accent font-medium transition-colors duration-200"
+                                onClick={() => handleNavClick(link.href)}
+                                className="text-gray-700 hover:text-accent font-medium transition-colors duration-200 bg-transparent border-none cursor-pointer"
                             >
                                 {link.name}
-                            </a>
+                            </button>
                         ))}
                     </nav>
 
@@ -89,14 +114,13 @@ const Header: React.FC = () => {
                 <div className="md:hidden bg-white border-t border-gray-100 absolute w-full shadow-md">
                     <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                         {navLinks.map((link) => (
-                            <a
+                            <button
                                 key={link.name}
-                                href={link.href}
-                                className="block px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-accent hover:bg-gray-50 transition-colors"
-                                onClick={() => setIsMobileMenuOpen(false)}
+                                onClick={() => handleNavClick(link.href)}
+                                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-accent hover:bg-gray-50 transition-colors bg-transparent"
                             >
                                 {link.name}
-                            </a>
+                            </button>
                         ))}
                     </div>
                 </div>

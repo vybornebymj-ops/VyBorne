@@ -3,6 +3,7 @@ import Hero from '../components/Hero';
 import CategorySection from '../components/CategorySection';
 import About from '../components/About';
 import ProductGrid from '../components/ProductGrid';
+import FounderNote from '../components/FounderNote';
 import ContactSection from '../components/ContactSection';
 
 const Home: React.FC = () => {
@@ -12,6 +13,7 @@ const Home: React.FC = () => {
             <CategorySection />
             <About />
             <ProductGrid />
+            <FounderNote />
             <ContactSection />
         </>
     );

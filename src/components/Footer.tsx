@@ -1,4 +1,5 @@
 import React, { type FormEvent, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FiInstagram, FiFacebook, FiTwitter, FiLinkedin, FiMessageCircle } from 'react-icons/fi';
 
 const Footer: React.FC = () => {
@@ -43,8 +44,8 @@ const Footer: React.FC = () => {
                         <ul className="mt-4 space-y-4">
                             <li><button onClick={() => alert("Contact support: vybornebymj@gmail.com")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Contact Us</button></li>
                             <li><button onClick={() => alert("FAQs are being compiled.")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">FAQs</button></li>
-                            <li><button onClick={() => alert("Shipping: 5-7 business days. Returns: 7 day policy.")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Shipping & Returns</button></li>
-                            <li><button onClick={() => alert("Privacy Policy: Your data is safe with us.")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Privacy Policy</button></li>
+                            <li><Link to="/shipping" className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Shipping & Returns</Link></li>
+                            <li><Link to="/privacy" className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Privacy Policy</Link></li>
                         </ul>
                     </div>
 

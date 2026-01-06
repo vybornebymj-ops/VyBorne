@@ -1,18 +1,17 @@
 import MarketingBanner from './components/MarketingBanner';
 import Header from './components/Header';
-import About from './components/About';
-import CategorySection from './components/CategorySection';
-import ContactSection from './components/ContactSection';
 import LocationGuard from './components/LocationGuard';
 import NewsletterModal from './components/NewsletterModal';
 import CookieBanner from './components/CookieBanner';
-import Hero from './components/Hero';
-import ProductGrid from './components/ProductGrid';
 import Footer from './components/Footer';
 import CartSidebar from './components/CartSidebar';
 import { CartProvider } from './context/CartContext';
-
 import { useEffect } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import TermsOfService from './pages/TermsOfService';
+import ShippingPolicy from './pages/ShippingPolicy';
 
 function App() {
   useEffect(() => {
@@ -29,11 +28,12 @@ function App() {
           <Header />
           <CartSidebar />
           <main className="flex-grow">
-            <Hero />
-            <CategorySection />
-            <About />
-            <ProductGrid />
-            <ContactSection />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfService />} />
+              <Route path="/shipping" element={<ShippingPolicy />} />
+            </Routes>
           </main>
           <Footer />
           <NewsletterModal />

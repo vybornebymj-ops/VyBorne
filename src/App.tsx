@@ -1,6 +1,5 @@
 
 import Header from './components/Header';
-import LocationGuard from './components/LocationGuard';
 import NewsletterModal from './components/NewsletterModal';
 import CookieBanner from './components/CookieBanner';
 import Footer from './components/Footer';
@@ -26,7 +25,6 @@ function App() {
 
   return (
     <CartProvider>
-      <LocationGuard>
         <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
 
           <Header />
@@ -45,7 +43,6 @@ function App() {
           <NewsletterModal />
           <CookieBanner />
         </div>
-      </LocationGuard>
     </CartProvider>
   );
 }

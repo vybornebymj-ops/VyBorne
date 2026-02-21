@@ -1,106 +1,128 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { FiArrowRight } from 'react-icons/fi';
 
 const categories = [
     {
         id: 'dresses',
         name: 'Dresses',
-        image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        description: 'Elegance for every occasion',
-        size: 'large' // Main focused category
+        tag: 'Signature',
+        image: 'https://images.unsplash.com/photo-1595777457583-95e059d581b8?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80',
+        span: 'large',
     },
     {
         id: 'tops',
         name: 'Tops',
-        image: 'https://images.unsplash.com/photo-1564257631407-4deb1f99d992?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        description: 'Versatile styles',
-        size: 'small'
+        tag: 'Versatile',
+        image: 'https://images.unsplash.com/photo-1564257631407-4deb1f99d992?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+        span: 'small',
     },
     {
         id: 'coords',
         name: 'Co-ords',
-        image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
-        description: 'Effortless matching sets',
-        size: 'small'
-    }
+        tag: 'Effortless',
+        image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+        span: 'small',
+    },
+    {
+        id: 'sarees',
+        name: 'Sarees',
+        tag: 'Ethnic Grace',
+        image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+        span: 'small',
+    },
+    {
+        id: 'accessories',
+        name: 'Accessories',
+        tag: 'Finishing Touch',
+        image: 'https://images.unsplash.com/photo-1606760227091-3dd870d97f1d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+        span: 'small',
+    },
 ];
 
 const CategorySection: React.FC = () => {
-    const handleCategoryClick = () => {
-        const shopElement = document.getElementById('shop');
-        shopElement?.scrollIntoView({ behavior: 'smooth' });
-    };
+    const ref = useRef<HTMLElement>(null);
+
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    el.querySelectorAll('.scroll-reveal').forEach((child) => child.classList.add('visible'));
+                }
+            },
+            { threshold: 0.08 }
+        );
+        observer.observe(el);
+        return () => observer.disconnect();
+    }, []);
 
     return (
-        <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 bg-gray-50">
-            <div className="flex flex-col md:flex-row justify-between items-center mb-16">
+        <section ref={ref} className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+            {/* Section Header */}
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12 scroll-reveal">
                 <div>
-                    <h2 className="text-4xl font-serif text-gray-900 mb-2">Shop by Category</h2>
-                    <p className="text-gray-500 font-light">Curated collections just for you</p>
+                    <p className="text-2xs text-stone uppercase tracking-ultra mb-2">— Explore</p>
+                    <h2 className="text-3xl md:text-4xl font-serif text-charcoal">Shop by Category</h2>
                 </div>
-                <button
-                    onClick={handleCategoryClick}
-                    className="mt-6 md:mt-0 flex items-center gap-2 text-sm font-medium text-gray-900 hover:text-accent transition-colors duration-300 group"
+                <Link
+                    to="/shop"
+                    className="mt-6 md:mt-0 inline-flex items-center gap-2 text-2xs uppercase tracking-ultra font-semibold text-charcoal hover:text-accent transition-colors group"
                 >
-                    View All Collections
+                    View All
                     <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
-                </button>
+                </Link>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 h-[600px]">
-                {/* Large Item: Dresses */}
+            {/* Bento Grid: large left + 2x2 right */}
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+                {/* Large tile — Dresses */}
                 <div
-                    className="relative group overflow-hidden rounded-2xl cursor-pointer md:row-span-2 shadow-sm hover:shadow-xl transition-all duration-500"
-                    onClick={handleCategoryClick}
+                    className="relative col-span-2 md:col-span-1 md:row-span-2 overflow-hidden grayscale-hover group cursor-pointer scroll-reveal scroll-reveal-delay-1"
+                    style={{ minHeight: '480px' }}
                 >
-                    <img
-                        src={categories[0].image}
-                        alt={categories[0].name}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                    />
-                    {/* Glassmorphism Overlay */}
-                    <div className="absolute inset-x-4 bottom-4 p-6 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl overflow-hidden">
-                        <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-50"></div>
-                        <div className="relative z-10 flex justify-between items-end">
-                            <div>
-                                <h3 className="text-3xl font-serif text-white mb-1">{categories[0].name}</h3>
-                                <p className="text-gray-100 font-light text-sm">{categories[0].description}</p>
-                            </div>
-                            <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center text-gray-900 transform translate-x-12 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-500">
-                                <FiArrowRight />
-                            </div>
+                    <Link to="/shop">
+                        <img
+                            src={categories[0].image}
+                            alt={categories[0].name}
+                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-charcoal/10 to-transparent" />
+                        <div className="absolute bottom-6 left-6 right-6">
+                            <p className="text-2xs text-cream/60 uppercase tracking-ultra mb-1">{categories[0].tag}</p>
+                            <h3 className="text-3xl font-serif text-cream">{categories[0].name}</h3>
                         </div>
-                    </div>
+                        <div className="absolute top-4 right-4 w-8 h-8 border border-cream/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                            <FiArrowRight size={14} className="text-cream" />
+                        </div>
+                    </Link>
                 </div>
 
-                {/* Right Column Grid for Smaller Items */}
-                <div className="flex flex-col gap-6 h-full">
-                    {categories.slice(1).map((category) => (
-                        <div
-                            key={category.id}
-                            className="relative group overflow-hidden rounded-2xl cursor-pointer flex-1 shadow-sm hover:shadow-xl transition-all duration-500"
-                            onClick={handleCategoryClick}
-                        >
+                {/* 4 small tiles */}
+                {categories.slice(1).map((cat, i) => (
+                    <div
+                        key={cat.id}
+                        className={`relative overflow-hidden grayscale-hover group cursor-pointer scroll-reveal scroll-reveal-delay-${i + 2}`}
+                        style={{ minHeight: '230px' }}
+                    >
+                        <Link to="/shop">
                             <img
-                                src={category.image}
-                                alt={category.name}
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                                src={cat.image}
+                                alt={cat.name}
+                                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                             />
-                            {/* Glassmorphism Overlay */}
-                            <div className="absolute inset-x-4 bottom-4 p-5 bg-white/10 backdrop-blur-md border border-white/20 rounded-xl">
-                                <div className="flex justify-between items-center">
-                                    <div>
-                                        <h3 className="text-2xl font-serif text-white mb-0.5">{category.name}</h3>
-                                        <p className="text-gray-100 font-light text-xs">{category.description}</p>
-                                    </div>
-                                    <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-gray-900 transform scale-0 group-hover:scale-100 transition-all duration-300 delay-100">
-                                        <FiArrowRight size={14} />
-                                    </div>
-                                </div>
+                            <div className="absolute inset-0 bg-gradient-to-t from-charcoal/60 via-transparent to-transparent" />
+                            <div className="absolute bottom-4 left-4">
+                                <p className="text-2xs text-cream/60 uppercase tracking-ultra mb-0.5">{cat.tag}</p>
+                                <h3 className="text-xl font-serif text-cream">{cat.name}</h3>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                            <div className="absolute top-3 right-3 w-7 h-7 border border-cream/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                                <FiArrowRight size={12} className="text-cream" />
+                            </div>
+                        </Link>
+                    </div>
+                ))}
             </div>
         </section>
     );

@@ -1,5 +1,6 @@
 import React from 'react';
 import type { Product } from '../types/Product';
+import { FiHeart } from 'react-icons/fi';
 
 interface ProductCardProps {
     product: Product;
@@ -9,51 +10,56 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, onQuickView }) => {
     return (
-        <div className="group relative">
-            {/* Image Container with Actions Overlay */}
-            <div
-                className="aspect-[3/4] bg-gray-100 overflow-hidden relative cursor-pointer"
-                onClick={() => onQuickView(product)}
-            >
+        <div className="group relative cursor-pointer" onClick={() => onQuickView(product)}>
+            {/* Image Container */}
+            <div className="aspect-[3/4] bg-stone/10 overflow-hidden relative">
+                {/* Primary Image */}
                 <img
                     src={product.imageUrl}
                     alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    className="w-full h-full object-cover transition-transform duration-700 ease-luxury group-hover:scale-105"
                     loading="lazy"
                 />
 
-                {/* Secondary Image on Hover */}
-                {product.images && product.images[1] && (
+                {/* Secondary Image on hover */}
+                {product.images?.[1] && (
                     <img
                         src={product.images[1]}
                         alt={product.name}
-                        className="absolute inset-0 w-full h-full object-center object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                        className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-500"
                     />
                 )}
 
-                {/* Actions Overlay - Slide up bar (Always visible on mobile/touch, hover on desktop) */}
-                <div className="absolute inset-x-0 bottom-0 translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-300 ease-in-out z-10">
+                {/* Dark overlay */}
+                <div className="absolute inset-0 bg-charcoal/0 group-hover:bg-charcoal/30 transition-all duration-500" />
+
+                {/* Wishlist Icon — top right */}
+                <button
+                    aria-label="Wishlist"
+                    onClick={(e) => { e.stopPropagation(); }}
+                    className="absolute top-3 right-3 w-8 h-8 bg-cream/90 backdrop-blur-xs flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-accent hover:text-cream text-charcoal"
+                >
+                    <FiHeart size={14} />
+                </button>
+
+                {/* Quick View label — rises from bottom */}
+                <div className="absolute inset-x-0 bottom-0 translate-y-full group-hover:translate-y-0 transition-transform duration-400 ease-luxury">
                     <button
-                        onClick={(e) => {
-                            e.stopPropagation();
-                            onQuickView(product);
-                        }}
-                        className="w-full bg-white/90 backdrop-blur-sm text-gray-900 py-3 md:py-4 uppercase text-xs md:text-sm tracking-widest font-medium hover:bg-gray-900 hover:text-white transition-colors border-t border-gray-100"
+                        onClick={(e) => { e.stopPropagation(); onQuickView(product); }}
+                        className="w-full bg-cream/95 backdrop-blur-xs text-charcoal py-3.5 text-2xs uppercase tracking-ultra font-semibold hover:bg-charcoal hover:text-cream transition-colors duration-300"
                     >
                         Quick View
                     </button>
                 </div>
             </div>
 
-            {/* Product Info */}
-            <div className="mt-5 text-center px-2">
-                <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em] mb-2">{product.category}</p>
-                <h3 className="text-lg font-serif text-gray-900 mb-1 group-hover:text-accent transition-colors duration-200">
-                    <span onClick={() => onQuickView(product)} className="cursor-pointer">
-                        {product.name}
-                    </span>
+            {/* Product Info — left-aligned, editorial */}
+            <div className="mt-4 px-0.5">
+                <p className="text-2xs text-stone uppercase tracking-ultra mb-1">{product.category}</p>
+                <h3 className="text-base font-serif text-charcoal leading-snug mb-1.5 group-hover:text-accent transition-colors duration-200">
+                    {product.name}
                 </h3>
-                <p className="text-sm text-gray-600 font-light tracking-wide">
+                <p className="text-sm text-stone font-display font-light">
                     {product.currency === 'INR' ? '₹' : '$'}{product.price.toLocaleString('en-IN')}
                 </p>
             </div>

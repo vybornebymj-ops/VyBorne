@@ -1,121 +1,164 @@
 import React, { type FormEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { FiInstagram, FiFacebook, FiTwitter, FiLinkedin, FiMessageCircle } from 'react-icons/fi';
+import { FiInstagram, FiFacebook, FiMessageCircle, FiArrowRight } from 'react-icons/fi';
 
 const Footer: React.FC = () => {
     const [email, setEmail] = useState('');
+    const [submitted, setSubmitted] = useState(false);
 
     const handleNewsletterSubmit = (e: FormEvent) => {
         e.preventDefault();
         console.log(`Newsletter subscription for: ${email}`);
-        alert(`Thanks for subscribing! (Mock submission for ${email})`);
+        setSubmitted(true);
         setEmail('');
+        setTimeout(() => setSubmitted(false), 4000);
     };
 
     return (
-        <footer className="bg-gray-900 text-white">
-            <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                    {/* Brand Info */}
-                    <div className="mb-8 md:mb-0">
-                        <span className="text-2xl font-bold tracking-tight text-white">VyBorne</span>
-                        <p className="mt-4 text-gray-400 text-sm">
-                            Curated elegance for the modern individual. Quality, style, and sustainability in every stitch.
-                        </p>
-                        <p className="mt-4 text-gray-400 text-sm">
-                            Email: <a href="mailto:vybornebymj@gmail.com" className="hover:text-white transition-colors">vybornebymj@gmail.com</a>
-                        </p>
-                    </div>
-
-                    {/* Quick Links */}
-                    <div>
-                        <h3 className="text-sm font-semibold text-gray-300 tracking-wider uppercase">Shop</h3>
-                        <ul className="mt-4 space-y-4">
-                            <li><button onClick={() => alert("New Arrivals coming soon!")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">New Arrivals</button></li>
-                            <li><button onClick={() => alert("Best Sellers list is being updated.")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Best Sellers</button></li>
-                            <li><button onClick={() => alert("Accessories collection launching soon.")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Accessories</button></li>
-                            <li><button onClick={() => alert("No items on sale currently.")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Sale</button></li>
-                        </ul>
-                    </div>
-
-                    {/* Support */}
-                    <div>
-                        <h3 className="text-sm font-semibold text-gray-300 tracking-wider uppercase">Support</h3>
-                        <ul className="mt-4 space-y-4">
-                            <li><button onClick={() => alert("Contact support: vybornebymj@gmail.com")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Contact Us</button></li>
-                            <li><button onClick={() => alert("FAQs are being compiled.")} className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">FAQs</button></li>
-                            <li><Link to="/shipping" className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Shipping & Returns</Link></li>
-                            <li><Link to="/privacy" className="text-base text-gray-400 hover:text-white hover:bg-transparent focus:outline-none">Privacy Policy</Link></li>
-                        </ul>
-                    </div>
-
-                    {/* Newsletter */}
-                    <div>
-                        <h3 className="text-sm font-semibold text-gray-300 tracking-wider uppercase">Subscribe to our news</h3>
-                        <p className="mt-4 text-base text-gray-400">
-                            The latest news, articles, and resources, sent to your inbox weekly.
-                        </p>
-                        <form className="mt-4 sm:flex sm:max-w-md" onSubmit={handleNewsletterSubmit}>
-                            <label htmlFor="email-address" className="sr-only">Email address</label>
-                            <input
-                                type="email"
-                                name="email-address"
-                                id="email-address"
-                                autoComplete="email"
-                                required
-                                className="appearance-none min-w-0 w-full bg-white border border-transparent rounded-md py-2 px-4 text-base text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-accent"
-                                placeholder="Enter your email"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
-                            <div className="mt-3 rounded-md sm:mt-0 sm:ml-3 sm:flex-shrink-0">
-                                <button
-                                    type="submit"
-                                    className="w-full bg-accent hover:bg-green-600 border border-transparent rounded-md py-2 px-4 flex items-center justify-center text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-accent transition-colors"
-                                >
-                                    Subscribe
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-
-                <div className="mt-8 border-t border-gray-700 pt-8 md:flex md:items-center md:justify-between">
-                    <div className="flex space-x-6 md:order-2">
-                        <a href="#" className="text-gray-400 hover:text-white">
-                            <span className="sr-only">Facebook</span>
-                            <FiFacebook size={24} />
-                        </a>
-                        <a href="#" className="text-gray-400 hover:text-white">
-                            <span className="sr-only">Instagram</span>
-                            <FiInstagram size={24} />
-                        </a>
-                        <a href="#" className="text-gray-400 hover:text-white">
-                            <span className="sr-only">Twitter</span>
-                            <FiTwitter size={24} />
-                        </a>
-                        <a href="#" className="text-gray-400 hover:text-white">
-                            <span className="sr-only">LinkedIn</span>
-                            <FiLinkedin size={24} />
-                        </a>
-                    </div>
-                    <p className="mt-8 text-base text-gray-400 md:mt-0 md:order-1">
-                        &copy; 2024 VyBorne, Inc. All rights reserved. <span className="text-xs text-gray-600">v1.0.1</span>
+        <>
+            <footer className="bg-charcoal text-cream">
+                {/* ── Top editorial block ── */}
+                <div className="border-b border-cream/10 py-16 px-4 sm:px-6 lg:px-8 text-center">
+                    <p className="text-2xs text-stone uppercase tracking-ultra mb-4">— Since 2024</p>
+                    <h2 className="font-serif text-5xl md:text-7xl text-cream mb-4 leading-none">VyBorne</h2>
+                    <p className="text-stone font-display text-sm max-w-sm mx-auto leading-relaxed">
+                        Curated elegance for the modern woman. Quality, style, and sustainability in every stitch.
                     </p>
-                </div>
-            </div>
 
-            {/* WhatsApp Floating Button */}
+                    {/* Social Row */}
+                    <div className="flex justify-center gap-6 mt-8">
+                        <a
+                            href="https://instagram.com/vybornebymj"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-10 h-10 border border-cream/20 flex items-center justify-center text-cream/50 hover:border-accent hover:text-accent transition-all duration-300"
+                            aria-label="Instagram"
+                        >
+                            <FiInstagram size={16} />
+                        </a>
+                        <a
+                            href="https://facebook.com"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-10 h-10 border border-cream/20 flex items-center justify-center text-cream/50 hover:border-accent hover:text-accent transition-all duration-300"
+                            aria-label="Facebook"
+                        >
+                            <FiFacebook size={16} />
+                        </a>
+                        <a
+                            href="/whatsapp"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="w-10 h-10 border border-cream/20 flex items-center justify-center text-cream/50 hover:border-accent hover:text-accent transition-all duration-300"
+                            aria-label="WhatsApp"
+                        >
+                            <FiMessageCircle size={16} />
+                        </a>
+                    </div>
+                </div>
+
+                {/* ── Three-column links + newsletter ── */}
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                        {/* Shop links */}
+                        <div>
+                            <h3 className="text-2xs uppercase tracking-ultra text-stone mb-5">Shop</h3>
+                            <ul className="space-y-3">
+                                {['New Arrivals', 'Dresses', 'Co-ords', 'Sarees', 'Accessories'].map((item) => (
+                                    <li key={item}>
+                                        <Link
+                                            to="/shop"
+                                            className="text-sm text-cream/60 hover:text-cream transition-colors font-display"
+                                        >
+                                            {item}
+                                        </Link>
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        {/* Info links */}
+                        <div>
+                            <h3 className="text-2xs uppercase tracking-ultra text-stone mb-5">Information</h3>
+                            <ul className="space-y-3">
+                                <li><Link to="/about" className="text-sm text-cream/60 hover:text-cream transition-colors font-display">Our Story</Link></li>
+                                <li><Link to="/shipping" className="text-sm text-cream/60 hover:text-cream transition-colors font-display">Shipping & Returns</Link></li>
+                                <li><Link to="/privacy" className="text-sm text-cream/60 hover:text-cream transition-colors font-display">Privacy Policy</Link></li>
+                                <li><Link to="/terms" className="text-sm text-cream/60 hover:text-cream transition-colors font-display">Terms of Service</Link></li>
+                            </ul>
+                        </div>
+
+                        {/* Contact */}
+                        <div>
+                            <h3 className="text-2xs uppercase tracking-ultra text-stone mb-5">Contact</h3>
+                            <ul className="space-y-3">
+                                <li>
+                                    <a href="mailto:vybornebymj@gmail.com" className="text-sm text-cream/60 hover:text-cream transition-colors font-display">
+                                        vybornebymj@gmail.com
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/whatsapp" className="text-sm text-cream/60 hover:text-cream transition-colors font-display">
+                                        Chat on WhatsApp
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {/* Newsletter */}
+                        <div>
+                            <h3 className="text-2xs uppercase tracking-ultra text-stone mb-5">Newsletter</h3>
+                            <p className="text-sm text-cream/50 font-display mb-4 leading-relaxed">
+                                New arrivals, style edits & exclusive offers.
+                            </p>
+                            {submitted ? (
+                                <p className="text-accent text-sm font-display">Thank you for subscribing! ✦</p>
+                            ) : (
+                                <form onSubmit={handleNewsletterSubmit} className="flex">
+                                    <input
+                                        type="email"
+                                        required
+                                        placeholder="Your email"
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        className="flex-1 bg-cream/5 border border-cream/15 text-cream placeholder-stone/50 px-4 py-2.5 text-sm font-display focus:outline-none focus:border-accent transition-colors"
+                                    />
+                                    <button
+                                        type="submit"
+                                        className="bg-accent hover:bg-accent-dark text-cream px-4 transition-colors flex items-center"
+                                        aria-label="Subscribe"
+                                    >
+                                        <FiArrowRight size={16} />
+                                    </button>
+                                </form>
+                            )}
+                        </div>
+                    </div>
+                </div>
+
+                {/* ── Bottom bar ── */}
+                <div className="border-t border-cream/10 py-5 px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2 text-2xs text-stone/60 uppercase tracking-ultra">
+                        <span>© 2026 VyBorne. All rights reserved.</span>
+                        <span>Made with ♥ in India</span>
+                    </div>
+                </div>
+            </footer>
+
+            {/* WhatsApp FAB */}
             <a
                 href="/whatsapp"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full shadow-lg transition-transform hover:scale-110 z-50 flex items-center justify-center"
+                className="fixed bottom-6 right-6 bg-[#25D366] hover:bg-[#1ebe5d] text-white p-4 rounded-full shadow-hover transition-all duration-300 hover:scale-110 z-50 flex items-center justify-center group"
                 aria-label="Chat on WhatsApp"
             >
-                <FiMessageCircle size={28} />
+                <FiMessageCircle size={24} />
+                <span className="absolute right-full mr-3 bg-charcoal text-cream text-2xs uppercase tracking-ultra px-3 py-1.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
+                    Chat with us
+                </span>
             </a>
-        </footer>
+        </>
     );
 };
 

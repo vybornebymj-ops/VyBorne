@@ -2,10 +2,16 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import heroVideo from '../assets/LandingPageVideo.mp4';
 
+/* ── Marquee Strip ────────────────────────────────────── */
+const marqueeItems = [
+    'Western', 'Ethnic', 'Indo-Western', 'Sustainable', 'Curated',
+    'Western', 'Ethnic', 'Indo-Western', 'Sustainable', 'Curated',
+];
+
 const Hero: React.FC = () => {
     return (
         <div className="relative h-screen w-full overflow-hidden">
-            {/* Video Background with Slow Zoom */}
+            {/* Video Background */}
             <video
                 className="absolute inset-0 w-full h-full object-cover animate-ken-burns"
                 src={heroVideo}
@@ -15,45 +21,80 @@ const Hero: React.FC = () => {
                 playsInline
             />
 
-            {/* Cinematic Overlay - Gradient for better text readability without dimming everything */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/60"></div>
+            {/* Layered Gradient Overlay — warmer, more editorial */}
+            <div className="absolute inset-0 bg-gradient-to-b from-charcoal/50 via-charcoal/20 to-charcoal/65" />
 
-            {/* Content - Editorial Layout */}
-            <div className="relative z-10 h-full flex flex-col justify-end pb-24 px-4 sm:px-6 lg:px-12 text-center md:text-left">
-                <div className="max-w-7xl w-full mx-auto animate-fade-in-up">
-                    <h1 className="text-white font-serif font-bold leading-none mb-6">
-                        <span className="block text-4xl sm:text-7xl md:text-9xl tracking-tight drop-shadow-2xl opacity-95">
-                            Curated Elegance
-                        </span>
-                        <span className="block mt-3 text-lg sm:text-2xl md:text-3xl font-sans font-light tracking-[0.2em] uppercase text-white/80">
-                            For Every Occasion
-                        </span>
-                    </h1>
+            {/* Center-aligned Editorial Content */}
+            <div className="relative z-10 h-full flex flex-col items-center justify-center text-center px-6">
 
-                    <div className="h-px w-24 bg-white/50 mb-8 mx-auto md:mx-0"></div>
+                {/* Pre-title tag */}
+                <p className="text-cream/60 text-2xs tracking-mega uppercase mb-6 animate-stagger-1 opacity-0">
+                    New Collection · 2026
+                </p>
 
-                    <div className="flex flex-col md:flex-row gap-8 items-center md:items-start tracking-wide">
-                        <p className="text-sm text-gray-200 md:text-base max-w-lg font-light leading-relaxed text-shadow-sm">
-                            We own our design and act as proud makers—from sourcing the finest fabrics to crafting every thread with purpose.
-                        </p>
+                {/* Main Headline */}
+                <h1 className="font-serif text-cream leading-none mb-0 animate-stagger-2 opacity-0">
+                    <span className="block text-5xl sm:text-7xl md:text-9xl font-bold tracking-tight text-shadow drop-shadow-2xl">
+                        Curated
+                    </span>
+                    <span className="block text-5xl sm:text-7xl md:text-9xl font-bold tracking-tight text-shadow drop-shadow-2xl mt-1">
+                        Elegance
+                    </span>
+                </h1>
 
-                        <div className="flex gap-6">
-                            <Link
-                                to="/shop"
-                                className="group relative px-8 py-3 bg-white text-gray-900 overflow-hidden text-xs uppercase tracking-[0.2em] font-medium hover:text-white transition-colors duration-300"
-                            >
-                                <span className="relative z-10">Shop Collection</span>
-                                <div className="absolute inset-0 bg-gray-900 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></div>
-                            </Link>
+                {/* Divider */}
+                <div className="flex items-center gap-4 my-8 animate-stagger-3 opacity-0">
+                    <div className="h-px w-16 bg-cream/30" />
+                    <span className="text-accent text-2xs tracking-ultra uppercase">For Every Occasion</span>
+                    <div className="h-px w-16 bg-cream/30" />
+                </div>
 
-                            <Link
-                                to="/about"
-                                className="group relative px-8 py-3 text-white border border-white/30 text-xs uppercase tracking-[0.2em] font-medium hover:border-white transition-colors duration-300"
-                            >
-                                Our Story
-                            </Link>
-                        </div>
-                    </div>
+                {/* Subtext */}
+                <p className="text-cream/75 max-w-md font-display text-base sm:text-lg font-light leading-relaxed mb-10 animate-stagger-3 opacity-0">
+                    From sourcing the finest fabrics to crafting every thread with purpose — we own our design.
+                </p>
+
+                {/* CTAs */}
+                <div className="flex flex-col sm:flex-row gap-4 animate-stagger-4 opacity-0">
+                    <Link
+                        to="/shop"
+                        className="group relative px-10 py-3.5 bg-cream text-charcoal overflow-hidden text-2xs uppercase tracking-ultra font-semibold hover:text-cream transition-colors duration-400"
+                    >
+                        <span className="relative z-10">Shop Collection</span>
+                        <div className="absolute inset-0 bg-charcoal transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-400 ease-luxury" />
+                    </Link>
+
+                    <Link
+                        to="/about"
+                        className="px-10 py-3.5 text-cream border border-cream/40 hover:border-cream hover:bg-cream/10 text-2xs uppercase tracking-ultra font-semibold transition-all duration-300"
+                    >
+                        Our Story
+                    </Link>
+                </div>
+
+                {/* Scroll cue */}
+                <div className="absolute bottom-28 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-stagger-4 opacity-0">
+                    <span className="text-cream/40 text-2xs tracking-ultra uppercase">Scroll</span>
+                    <div className="w-px h-10 bg-gradient-to-b from-cream/40 to-transparent" />
+                </div>
+            </div>
+
+            {/* Bottom Marquee Strip */}
+            <div className="absolute bottom-0 left-0 right-0 bg-charcoal/80 backdrop-blur-xs border-t border-cream/10 py-3 overflow-hidden">
+                <div className="flex whitespace-nowrap animate-marquee">
+                    {marqueeItems.map((item, i) => (
+                        <React.Fragment key={i}>
+                            <span className="text-cream/60 text-2xs tracking-ultra uppercase mx-6">{item}</span>
+                            <span className="text-accent text-2xs mx-2">✦</span>
+                        </React.Fragment>
+                    ))}
+                    {/* Duplicate for seamless loop */}
+                    {marqueeItems.map((item, i) => (
+                        <React.Fragment key={`d-${i}`}>
+                            <span className="text-cream/60 text-2xs tracking-ultra uppercase mx-6">{item}</span>
+                            <span className="text-accent text-2xs mx-2">✦</span>
+                        </React.Fragment>
+                    ))}
                 </div>
             </div>
         </div>

@@ -1,22 +1,60 @@
-import React, { useState, useEffect } from 'react';
-import { FiShoppingBag, FiMenu, FiX, FiSearch, FiUser } from 'react-icons/fi';
+import React, { useState, useEffect, useRef } from 'react';
+import { FiShoppingBag, FiMenu, FiX, FiSearch, FiUser, FiHeart } from 'react-icons/fi';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import logo from '../assets/logo.png';
 import LoginModal from './LoginModal';
 
+/* ── Announcement Bar ─────────────────────────────────── */
+const AnnouncementBar: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) => (
+    <div className="bg-charcoal text-cream text-center text-2xs tracking-ultra uppercase py-2.5 px-10 relative animate-slide-down font-display">
+        <span className="inline-flex items-center gap-6">
+            <span>Free shipping on orders above ₹999</span>
+            <span className="text-accent">·</span>
+            <span>New arrivals every Friday</span>
+            <span className="text-accent">·</span>
+            <span>Sustainable &amp; ethically made</span>
+        </span>
+        <button
+            onClick={onDismiss}
+            className="absolute right-4 top-1/2 -translate-y-1/2 text-cream/50 hover:text-cream transition-colors"
+            aria-label="Dismiss"
+        >
+            <FiX size={14} />
+        </button>
+    </div>
+);
+
+/* ── Header ───────────────────────────────────────────── */
 const Header: React.FC = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
+    const [isScrolled, setIsScrolled] = useState(false);
+    const [showAnnouncement, setShowAnnouncement] = useState(true);
+    const searchRef = useRef<HTMLInputElement>(null);
+
     const { toggleCart, totalItems } = useCart();
     const location = useLocation();
     const navigate = useNavigate();
+    const isHome = location.pathname === '/';
 
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
-    };
+    useEffect(() => {
+        const handleScroll = () => setIsScrolled(window.scrollY > 40);
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
+
+    // Close mobile menu on route change
+    useEffect(() => {
+        setIsMobileMenuOpen(false);
+        setIsSearchOpen(false);
+    }, [location]);
+
+    useEffect(() => {
+        if (isSearchOpen && searchRef.current) searchRef.current.focus();
+    }, [isSearchOpen]);
 
     const handleSearchSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -30,17 +68,11 @@ const Header: React.FC = () => {
     const handleNavClick = (href: string) => {
         setIsMobileMenuOpen(false);
         if (href.startsWith('#')) {
-            // If on home page, scroll
             if (location.pathname === '/') {
-                const id = href.substring(1);
-                const element = document.getElementById(id);
-                if (element) {
-                    element.scrollIntoView({ behavior: 'smooth' });
-                }
+                const el = document.getElementById(href.substring(1));
+                el?.scrollIntoView({ behavior: 'smooth' });
             } else {
-                // If not on home page, go home then scroll (simple version: just go home)
                 navigate('/');
-                // In a real app, you'd pass the hash to navigate or use a context to scroll after nav
             }
         } else {
             navigate(href);
@@ -54,136 +86,151 @@ const Header: React.FC = () => {
         { name: 'Contact', href: '#contact' },
     ];
 
-    const [isScrolled, setIsScrolled] = useState(false);
-
-    useEffect(() => {
-        const handleScroll = () => {
-            setIsScrolled(window.scrollY > 20);
-        };
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    const isHome = location.pathname === '/';
-    const headerClass = isHome && !isScrolled
-        ? 'fixed w-full bg-transparent text-white border-transparent'
-        : 'sticky top-0 bg-white text-gray-900 shadow-sm border-b border-gray-100';
-
-    const getTextColor = () => {
-        if (isHome && !isScrolled) return 'text-white hover:text-gray-200';
-        return 'text-gray-700 hover:text-accent';
-    };
-
-    const iconClass = isHome && !isScrolled ? 'text-white hover:text-gray-200' : 'text-gray-600 hover:text-accent';
+    // Styling logic
+    const transparent = isHome && !isScrolled;
+    const headerBg = transparent
+        ? 'bg-transparent border-transparent'
+        : 'bg-cream/95 backdrop-blur-sm border-b border-stone/10 shadow-card';
+    const textColor = transparent ? 'text-white' : 'text-charcoal';
+    const iconColor = transparent ? 'text-white hover:text-white/70' : 'text-charcoal hover:text-accent';
 
     return (
-        <header className={`${headerClass} z-50 transition-all duration-300`}>
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-between items-center h-16">
-                    {/* Logo - Immersive Blend Mode Magic */}
-                    <div className="flex-shrink-0 flex items-center">
-                        <Link to="/">
-                            <div className={`relative ${isHome && !isScrolled ? 'mix-blend-screen' : ''}`}>
-                                <img
-                                    src={logo}
-                                    alt="VyBorne Logo"
-                                    className={`h-10 md:h-12 w-auto cursor-pointer transition-all duration-300 ${isHome && !isScrolled ? 'invert grayscale contrast-200' : ''}`}
-                                />
-                            </div>
+        <>
+            {/* Announcement Bar */}
+            {showAnnouncement && <AnnouncementBar onDismiss={() => setShowAnnouncement(false)} />}
+
+            <header className={`${headerBg} ${transparent ? 'fixed' : 'sticky top-0'} w-full z-50 transition-all duration-500`}>
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="flex justify-between items-center h-20">
+
+                        {/* Logo */}
+                        <Link to="/" className="flex-shrink-0">
+                            <img
+                                src={logo}
+                                alt="VyBorne"
+                                className={`h-10 md:h-12 w-auto transition-all duration-500 ${transparent ? 'invert grayscale contrast-200' : ''}`}
+                            />
                         </Link>
-                    </div>
 
-                    {/* Desktop Navigation - Luxury Minimalist */}
-                    <nav className="hidden md:flex space-x-10">
+                        {/* Desktop Navigation */}
+                        <nav className="hidden md:flex items-center space-x-10">
+                            {navLinks.map((link) => {
+                                const isActive = location.pathname === link.href;
+                                return (
+                                    <button
+                                        key={link.name}
+                                        onClick={() => handleNavClick(link.href)}
+                                        className={`nav-link ${isActive ? 'active' : ''} ${textColor} bg-transparent border-none cursor-pointer transition-colors duration-300`}
+                                    >
+                                        {link.name}
+                                    </button>
+                                );
+                            })}
+                        </nav>
+
+                        {/* Action Icons */}
+                        <div className="flex items-center gap-4">
+                            {/* Search */}
+                            <div className="relative flex items-center">
+                                {isSearchOpen && (
+                                    <form
+                                        onSubmit={handleSearchSubmit}
+                                        className="absolute right-full mr-3 animate-fade-in"
+                                    >
+                                        <input
+                                            ref={searchRef}
+                                            type="text"
+                                            placeholder="Search..."
+                                            value={searchQuery}
+                                            onChange={(e) => setSearchQuery(e.target.value)}
+                                            className="w-52 pl-4 pr-3 py-1.5 text-sm bg-cream border border-stone/30 focus:outline-none focus:border-accent text-charcoal placeholder-stone/60 rounded-none"
+                                        />
+                                    </form>
+                                )}
+                                <button
+                                    aria-label="Toggle Search"
+                                    className={`${iconColor} p-1 transition-colors`}
+                                    onClick={() => setIsSearchOpen(!isSearchOpen)}
+                                >
+                                    {isSearchOpen ? <FiX size={20} /> : <FiSearch size={20} />}
+                                </button>
+                            </div>
+
+                            {/* Wishlist */}
+                            <button aria-label="Wishlist" className={`${iconColor} p-1 transition-colors hidden sm:block`}>
+                                <FiHeart size={20} />
+                            </button>
+
+                            {/* Account */}
+                            <button
+                                aria-label="Account"
+                                className={`${iconColor} p-1 transition-colors`}
+                                onClick={() => setIsLoginModalOpen(true)}
+                            >
+                                <FiUser size={20} />
+                            </button>
+
+                            {/* Cart */}
+                            <button
+                                aria-label="Cart"
+                                className={`relative ${iconColor} p-1 transition-colors`}
+                                onClick={toggleCart}
+                            >
+                                <FiShoppingBag size={20} />
+                                {totalItems > 0 && (
+                                    <span className="absolute -top-1 -right-1 bg-accent text-white text-2xs font-semibold rounded-full h-4 w-4 flex items-center justify-center leading-none">
+                                        {totalItems}
+                                    </span>
+                                )}
+                            </button>
+
+                            {/* Mobile Hamburger */}
+                            <button
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                className={`md:hidden ${iconColor} p-1 transition-colors`}
+                                aria-label="Toggle Menu"
+                            >
+                                {isMobileMenuOpen ? <FiX size={22} /> : <FiMenu size={22} />}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Mobile Drawer — smooth slide down */}
+                <div
+                    className={`md:hidden overflow-hidden transition-all duration-400 ease-luxury ${isMobileMenuOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                        } bg-cream border-t border-stone/10`}
+                >
+                    <nav className="px-6 py-8 flex flex-col gap-6">
                         {navLinks.map((link) => (
                             <button
                                 key={link.name}
                                 onClick={() => handleNavClick(link.href)}
-                                className={`${getTextColor()} text-xs uppercase tracking-[0.2em] font-medium transition-all duration-300 hover:tracking-[0.3em] bg-transparent border-none cursor-pointer`}
+                                className="text-left text-xl font-serif text-charcoal hover:text-accent transition-colors bg-transparent border-none cursor-pointer"
                             >
                                 {link.name}
                             </button>
                         ))}
+                        <div className="pt-4 border-t border-stone/20">
+                            <form onSubmit={handleSearchSubmit} className="flex gap-2">
+                                <input
+                                    type="text"
+                                    placeholder="Search products..."
+                                    value={searchQuery}
+                                    onChange={(e) => setSearchQuery(e.target.value)}
+                                    className="flex-1 px-4 py-2 border border-stone/30 bg-cream text-charcoal placeholder-stone/50 focus:outline-none focus:border-accent text-sm"
+                                />
+                                <button type="submit" className="bg-charcoal text-cream px-4 text-sm">
+                                    Go
+                                </button>
+                            </form>
+                        </div>
                     </nav>
-
-                    {/* Icons (Cart, Search, Mobile Menu) */}
-                    <div className="flex items-center space-x-4">
-                        <button
-                            aria-label="Login"
-                            className={`${iconClass} p-1 transition-colors`}
-                            onClick={() => setIsLoginModalOpen(true)}
-                        >
-                            <FiUser size={22} />
-                        </button>
-                        <div className="relative flex items-center">
-                            {isSearchOpen && (
-                                <form onSubmit={handleSearchSubmit} className="absolute right-full mr-2">
-                                    <input
-                                        type="text"
-                                        placeholder="Search..."
-                                        value={searchQuery}
-                                        onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="w-48 pl-3 pr-8 py-1 text-sm border border-gray-300 rounded-full focus:outline-none focus:border-accent"
-                                        autoFocus
-                                    />
-                                </form>
-                            )}
-                            <button
-                                aria-label="Search"
-                                className={`${iconClass} p-1 transition-colors ${isSearchOpen ? 'text-accent' : ''}`}
-                                onClick={() => setIsSearchOpen(!isSearchOpen)}
-                            >
-                                {isSearchOpen ? <FiX size={22} /> : <FiSearch size={22} />}
-                            </button>
-                        </div>
-                        <div
-                            className={`relative cursor-pointer ${iconClass} transition-colors`}
-                            onClick={toggleCart}
-                        >
-                            <FiShoppingBag size={22} />
-                            {totalItems > 0 && (
-                                <span className="absolute -top-1 -right-1 bg-accent text-white text-xs font-bold rounded-full h-4 w-4 flex items-center justify-center">
-                                    {totalItems}
-                                </span>
-                            )}
-                        </div>
-
-                        {/* Mobile menu button */}
-                        <div className="md:hidden">
-                            <button
-                                onClick={toggleMobileMenu}
-                                className="text-gray-700 hover:text-accent focus:outline-none p-2"
-                                aria-label="Toggle menu"
-                            >
-                                {isMobileMenuOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-                            </button>
-                        </div>
-                    </div>
                 </div>
-            </div>
 
-            {/* Mobile Navigation Menu */}
-            {isMobileMenuOpen && (
-                <div className="md:hidden bg-white border-t border-gray-100 absolute w-full shadow-md">
-                    <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                        {navLinks.map((link) => (
-                            <button
-                                key={link.name}
-                                onClick={() => handleNavClick(link.href)}
-                                className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-700 hover:text-accent hover:bg-gray-50 transition-colors bg-transparent"
-                            >
-                                {link.name}
-                            </button>
-                        ))}
-                    </div>
-                </div>
-            )}
-
-            <LoginModal
-                isOpen={isLoginModalOpen}
-                onClose={() => setIsLoginModalOpen(false)}
-            />
-        </header>
+                <LoginModal isOpen={isLoginModalOpen} onClose={() => setIsLoginModalOpen(false)} />
+            </header>
+        </>
     );
 };
 

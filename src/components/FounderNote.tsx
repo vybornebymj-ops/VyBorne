@@ -13,7 +13,7 @@ const FounderNote: React.FC = () => {
                         <p className="text-lg text-gray-600 leading-relaxed mb-8">
                             At VyBorne, we believe that trust is the most valuable fabric we weave.
                             You won't find fake or AI-generated reviews here. Instead, we offer you
-                            our unwavering promise: <strong>uncompromised quality in every stitch</strong>.
+                            our unwavering promise: <strong>uncompromised quality in every stitch.</strong>
                         </p>
                         <p className="text-lg text-gray-600 leading-relaxed mb-8">
                             We let our craftsmanship speak for itself. We invite you to experience the

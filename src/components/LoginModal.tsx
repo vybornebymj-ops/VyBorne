@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FiX, FiMail, FiLock } from 'react-icons/fi';
 import { FcGoogle } from 'react-icons/fc';
+import { supabase } from '../lib/supabase';
 
 interface LoginModalProps {
     isOpen: boolean;
@@ -9,8 +10,70 @@ interface LoginModalProps {
 
 const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
     const [isLogin, setIsLogin] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    // Form states
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [fullName, setFullName] = useState('');
 
     if (!isOpen) return null;
+
+    const handleGoogleLogin = async () => {
+        try {
+            setError(null);
+            const { error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+                options: {
+                    redirectTo: window.location.origin
+                }
+            });
+            if (error) throw error;
+        } catch (err: any) {
+            setError(err.message || 'An error occurred during Google sign in.');
+        }
+    };
+
+    const handleEmailAuth = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setError(null);
+        setLoading(true);
+
+        try {
+            if (isLogin) {
+                // Sign In
+                const { error } = await supabase.auth.signInWithPassword({
+                    email,
+                    password,
+                });
+                if (error) throw error;
+                onClose(); // Close modal on success
+            } else {
+                // Register
+                const { error } = await supabase.auth.signUp({
+                    email,
+                    password,
+                    options: {
+                        data: {
+                            full_name: fullName,
+                        },
+                    },
+                });
+                if (error) throw error;
+
+                // Supabase requires email confirmation by default.
+                // We show a message instead of immediately closing if that's the case.
+                setError('Registration successful! Please check your email to verify your account.');
+                // Optional: You could switch to login mode here
+                // setIsLogin(true);
+            }
+        } catch (err: any) {
+            setError(err.message || 'Failed to authenticate');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
@@ -24,6 +87,7 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                 <button
                     onClick={onClose}
                     className="absolute top-4 right-4 p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-100 transition-colors z-10"
+                    disabled={loading}
                 >
                     <FiX size={20} />
                 </button>
@@ -38,9 +102,20 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                         </p>
                     </div>
 
+                    {error && (
+                        <div className={`p-3 mb-6 rounded-lg text-sm text-center ${error.includes('successful') ? 'bg-green-50 text-green-700 border border-green-200' : 'bg-red-50 text-red-600 border border-red-100'}`}>
+                            {error}
+                        </div>
+                    )}
+
                     <div className="space-y-4">
                         {/* Google Sign In */}
-                        <button className="w-full flex items-center justify-center gap-3 bg-white border border-gray-200 text-gray-700 px-4 py-3 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 font-medium">
+                        <button
+                            onClick={handleGoogleLogin}
+                            type="button"
+                            disabled={loading}
+                            className="w-full flex items-center justify-center gap-3 bg-white border border-gray-200 text-gray-700 px-4 py-3 rounded-xl hover:bg-gray-50 hover:border-gray-300 transition-all duration-200 font-medium disabled:opacity-50"
+                        >
                             <FcGoogle size={22} />
                             <span>Continue with Google</span>
                         </button>
@@ -52,14 +127,18 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                         </div>
 
                         {/* Email Form */}
-                        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+                        <form className="space-y-4" onSubmit={handleEmailAuth}>
                             {!isLogin && (
                                 <div>
                                     <label className="block text-xs font-medium text-gray-700 mb-1 ml-1">Full Name</label>
                                     <div className="relative">
                                         <input
                                             type="text"
-                                            className="w-full pl-4 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all text-sm"
+                                            required
+                                            value={fullName}
+                                            onChange={(e) => setFullName(e.target.value)}
+                                            disabled={loading}
+                                            className="w-full pl-4 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all text-sm disabled:opacity-50"
                                             placeholder="John Doe"
                                         />
                                     </div>
@@ -72,7 +151,11 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                                     <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                                     <input
                                         type="email"
-                                        className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all text-sm"
+                                        required
+                                        value={email}
+                                        onChange={(e) => setEmail(e.target.value)}
+                                        disabled={loading}
+                                        className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all text-sm disabled:opacity-50"
                                         placeholder="name@example.com"
                                     />
                                 </div>
@@ -84,14 +167,27 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                                     <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
                                     <input
                                         type="password"
-                                        className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all text-sm"
+                                        required
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        disabled={loading}
+                                        minLength={6}
+                                        className="w-full pl-11 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-accent/20 focus:border-accent outline-none transition-all text-sm disabled:opacity-50"
                                         placeholder="••••••••"
                                     />
                                 </div>
                             </div>
 
-                            <button className="w-full bg-gray-900 text-white py-3.5 rounded-xl font-medium hover:bg-black transform active:scale-[0.98] transition-all duration-200 shadow-lg shadow-gray-900/10">
-                                {isLogin ? 'Sign In' : 'Create Account'}
+                            <button
+                                type="submit"
+                                disabled={loading}
+                                className="w-full flex items-center justify-center bg-gray-900 text-white py-3.5 rounded-xl font-medium hover:bg-black transform active:scale-[0.98] transition-all duration-200 shadow-lg shadow-gray-900/10 disabled:opacity-70 disabled:active:scale-100"
+                            >
+                                {loading ? (
+                                    <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                                ) : (
+                                    isLogin ? 'Sign In' : 'Create Account'
+                                )}
                             </button>
                         </form>
                     </div>
@@ -100,8 +196,12 @@ const LoginModal: React.FC<LoginModalProps> = ({ isOpen, onClose }) => {
                         <p className="text-sm text-gray-500">
                             {isLogin ? "Don't have an account? " : "Already have an account? "}
                             <button
-                                onClick={() => setIsLogin(!isLogin)}
-                                className="text-accent font-medium hover:underline"
+                                onClick={() => {
+                                    setIsLogin(!isLogin);
+                                    setError(null);
+                                }}
+                                disabled={loading}
+                                className="text-accent font-medium hover:underline disabled:opacity-50"
                             >
                                 {isLogin ? 'Sign up' : 'Log in'}
                             </button>

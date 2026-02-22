@@ -5,6 +5,7 @@ import CookieBanner from './components/CookieBanner';
 import Footer from './components/Footer';
 import CartSidebar from './components/CartSidebar';
 import { CartProvider } from './context/CartContext';
+import { AuthProvider } from './context/AuthContext';
 import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
@@ -24,7 +25,8 @@ function App() {
   }, []);
 
   return (
-    <CartProvider>
+    <AuthProvider>
+      <CartProvider>
         <div className="min-h-screen bg-gray-50 flex flex-col font-sans">
 
           <Header />
@@ -43,7 +45,8 @@ function App() {
           <NewsletterModal />
           <CookieBanner />
         </div>
-    </CartProvider>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 

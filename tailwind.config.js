@@ -7,23 +7,26 @@ export default {
   theme: {
     extend: {
       colors: {
-        accent: '#C9856A',       // Dusty Rose - primary CTA, links
-        'accent-dark': '#A96D55', // Darker hover state
-        cream: '#FAF8F5',        // Warm off-white background
-        charcoal: '#1A1A1A',     // Deep text / black replacement
-        'charcoal-light': '#3D3D3D',
-        blush: '#F5DDD5',        // Softer blush for backgrounds
-        stone: '#8C7B72',        // Warm grey for secondary text
+        accent: '#D4AF37',       // Muted metallic gold instead of dusty rose
+        'accent-dark': '#B5952F', // Darker gold hover
+        cream: '#FAFAFA',        // Pristine minimal white
+        charcoal: '#0A0A0A',     // Pitch black
+        'charcoal-light': '#222222',
+        blush: '#F3F0EC',        // Very subtle warmth
+        stone: '#6B6B6B',        // Muted grey
       },
       fontFamily: {
-        sans: ['Cormorant Garamond', 'Georgia', 'serif'],
+        sans: ['"Inter"', 'sans-serif'], // Very clean geometric sans
         serif: ['"Playfair Display"', 'serif'],
-        display: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+        display: ['"Cormorant Garamond"', 'serif'],
         script: ['"Dancing Script"', 'cursive'],
         mono: ['ui-monospace', 'monospace'],
       },
       fontSize: {
-        '2xs': ['0.65rem', { lineHeight: '1rem' }],
+        '2xs': ['0.65rem', { lineHeight: '1rem', letterSpacing: '0.1em' }],
+        'display-1': ['5.5rem', { lineHeight: '0.9', letterSpacing: '-0.02em' }],
+        'display-2': ['4rem', { lineHeight: '1', letterSpacing: '-0.02em' }],
+        'display-3': ['3rem', { lineHeight: '1.1', letterSpacing: '-0.01em' }],
       },
       letterSpacing: {
         'ultra': '0.25em',

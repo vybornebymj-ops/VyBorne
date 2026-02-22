@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Dancing+Script:wght@400;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Dancing+Script:wght@400;600&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -11,7 +11,7 @@
   }
 
   body {
-    @apply font-display antialiased text-charcoal bg-cream;
+    @apply font-sans antialiased text-charcoal bg-cream tracking-wide;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -20,22 +20,23 @@
   h2,
   h3,
   h4 {
-    @apply font-serif;
+    @apply font-display tracking-tight;
   }
 
   /* Custom scrollbar */
   ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
+    width: 4px;
+    height: 4px;
   }
 
   ::-webkit-scrollbar-track {
-    background: #FAF8F5;
+    background: transparent;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: #C9856A;
-    border-radius: 10px;
+    background: #1A1A1A;
+    /* Charcoal slim scrollbar */
+    border-radius: 4px;
   }
 }
 

@@ -21,7 +21,7 @@ const Footer: React.FC = () => {
                 <div className="border-b border-cream/10 py-16 px-4 sm:px-6 lg:px-8 text-center">
                     <p className="text-2xs text-stone uppercase tracking-ultra mb-4">— Since 2024</p>
                     <h2 className="font-serif text-5xl md:text-7xl text-cream mb-4 leading-none">VyBorne</h2>
-                    <p className="text-stone font-display text-sm max-w-sm mx-auto leading-relaxed">
+                    <p className="text-stone font-display text-sm max-w-[80vw] sm:max-w-sm mx-auto leading-relaxed">
                         Curated elegance for the modern woman. Quality, style, and sustainability in every stitch.
                     </p>
 
@@ -58,8 +58,8 @@ const Footer: React.FC = () => {
                 </div>
 
                 {/* ── Three-column links + newsletter ── */}
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div className="max-w-7xl mx-auto px-6 sm:px-6 lg:px-8 py-12">
+                    <div className="grid grid-cols-1 xs:grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-12">
                         {/* Shop links */}
                         <div>
                             <h3 className="text-2xs uppercase tracking-ultra text-stone mb-5">Shop</h3>
@@ -107,25 +107,26 @@ const Footer: React.FC = () => {
 
                         {/* Newsletter */}
                         <div>
-                            <h3 className="text-2xs uppercase tracking-ultra text-stone mb-5">Newsletter</h3>
+                            <span className="uppercase text-[10px] xs:text-xs font-bold tracking-widest text-accent mb-2 block">Don't Miss Out</span>
+                            <h2 className="text-2xl xs:text-3xl font-serif text-cream mb-2 xs:mb-3">Join the Club</h2>
                             <p className="text-sm text-cream/50 font-display mb-4 leading-relaxed">
                                 New arrivals, style edits & exclusive offers.
                             </p>
                             {submitted ? (
                                 <p className="text-accent text-sm font-display">Thank you for subscribing! ✦</p>
                             ) : (
-                                <form onSubmit={handleNewsletterSubmit} className="flex">
+                                <form onSubmit={handleNewsletterSubmit} className="flex flex-col xs:flex-row gap-2">
                                     <input
                                         type="email"
                                         required
                                         placeholder="Your email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="flex-1 bg-cream/5 border border-cream/15 text-cream placeholder-stone/50 px-4 py-2.5 text-sm font-display focus:outline-none focus:border-accent transition-colors"
+                                        className="flex-1 bg-cream/5 border border-cream/15 text-cream placeholder-stone/50 px-4 py-2.5 text-sm font-display focus:outline-none focus:border-accent transition-colors w-full"
                                     />
                                     <button
                                         type="submit"
-                                        className="bg-accent hover:bg-accent-dark text-cream px-4 transition-colors flex items-center"
+                                        className="bg-accent hover:bg-accent-dark text-cream px-4 py-2.5 transition-colors flex items-center justify-center"
                                         aria-label="Subscribe"
                                     >
                                         <FiArrowRight size={16} />

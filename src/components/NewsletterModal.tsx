@@ -50,7 +50,7 @@ const NewsletterModal: React.FC = () => {
                 onClick={handleClose}
             ></div>
 
-            <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-fade-in-up flex flex-col md:flex-row">
+            <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden animate-fade-in-up flex flex-col md:flex-row max-h-[90vh] overflow-y-auto">
                 {/* Close Button */}
                 <button
                     onClick={handleClose}
@@ -70,7 +70,7 @@ const NewsletterModal: React.FC = () => {
                 </div>
 
                 {/* Right Content Section */}
-                <div className="flex-1 p-8 md:p-10 bg-white">
+                <div className="flex-1 p-6 xs:p-8 md:p-10 bg-white">
                     {status === 'success' ? (
                         <div className="h-full flex flex-col items-center justify-center text-center py-8">
                             <div className="w-16 h-16 bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-4">
@@ -82,8 +82,8 @@ const NewsletterModal: React.FC = () => {
                     ) : (
                         <>
                             <div className="mb-6">
-                                <span className="uppercase text-xs font-bold tracking-widest text-accent mb-2 block">Don't Miss Out</span>
-                                <h2 className="text-3xl font-serif text-gray-900 mb-3">Join the Club</h2>
+                                <span className="uppercase text-[10px] xs:text-xs font-bold tracking-widest text-accent mb-2 block">Don't Miss Out</span>
+                                <h2 className="text-2xl xs:text-3xl font-serif text-gray-900 mb-2 xs:mb-3">Join the Club</h2>
                                 <p className="text-gray-600 font-light leading-relaxed">
                                     Subscribe to receive updates, access to exclusive deals, and more.
                                 </p>

@@ -2,9 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import heroVideo from '../assets/LandingPageVideo.mp4';
-import { cn } from '../lib/utils';
-
-const transition = { duration: 1.4, ease: [0.6, 0.01, -0.05, 0.9] };
 
 const Hero: React.FC = () => {
     return (
@@ -29,21 +26,21 @@ const Hero: React.FC = () => {
             </motion.div>
 
             {/* Edge-to-Edge Magazine Typography */}
-            <div className="relative z-10 h-full w-full flex flex-col justify-end pb-32 px-6 lg:px-12">
+            <div className="relative z-10 h-full w-full flex flex-col justify-end pb-20 sm:pb-32 px-6 lg:px-12">
                 <div className="max-w-[90rem] mx-auto w-full">
                     <div className="overflow-hidden mb-4">
                         <motion.h1
                             initial={{ y: "100%" }}
                             animate={{ y: 0 }}
-                            transition={{ delay: 0.2, ...transition }}
+                            transition={{ delay: 0.2, duration: 1.4, ease: "easeOut" }}
                             className="font-display text-cream leading-[0.85] tracking-tighter"
                         >
-                            <span className="block text-display-3 sm:text-display-2 lg:text-display-1 font-medium">Curated</span>
-                            <span className="block text-display-3 sm:text-display-2 lg:text-display-1 font-medium italic pr-4 lg:ml-24">Elegance</span>
+                            <span className="block text-5xl xs:text-6xl sm:text-display-2 lg:text-display-1 font-medium">Curated</span>
+                            <span className="block text-5xl xs:text-6xl sm:text-display-2 lg:text-display-1 font-medium italic pr-4 lg:ml-24">Elegance</span>
                         </motion.h1>
                     </div>
 
-                    <div className="mt-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
+                    <div className="mt-8 sm:mt-12 flex flex-col md:flex-row md:items-end justify-between gap-8">
                         <motion.p
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}

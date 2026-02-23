@@ -17,10 +17,10 @@ const AnnouncementBar: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) => 
         transition={{ duration: 0.5, ease: [0.7, 0, 0.3, 1] }}
         className="bg-charcoal text-cream text-center text-2xs tracking-mega uppercase py-2.5 px-10 relative font-sans overflow-hidden"
     >
-        <div className="flex items-center justify-center gap-6 opacity-90">
-            <span>Free shipping on orders over ₹999</span>
-            <span className="text-stone">·</span>
-            <span>Sustainable & Ethically Made</span>
+        <div className="flex items-center justify-center gap-3 sm:gap-6 opacity-90 transition-all duration-300">
+            <span className="whitespace-nowrap">Free shipping over ₹999</span>
+            <span className="text-stone hidden xs:inline">·</span>
+            <span className="whitespace-nowrap hidden xs:inline">Sustainable & Ethically Made</span>
         </div>
         <button
             onClick={onDismiss}
@@ -156,7 +156,7 @@ const Header: React.FC = () => {
                         </nav>
 
                         {/* Action Icons - Right */}
-                        <div className="flex-1 flex justify-end items-center gap-5 md:gap-6">
+                        <div className="flex-1 flex justify-end items-center gap-3 xs:gap-5 md:gap-6">
                             {/* Search */}
                             <div className="relative flex items-center">
                                 <AnimatePresence>

@@ -70,8 +70,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
     }
 
     return (
-        <section id="shop" className="w-full bg-cream py-32 overflow-hidden">
-            <div className="max-w-[100rem] mx-auto px-6 sm:px-12 lg:px-20">
+        <section id="shop" className="w-full bg-cream py-20 sm:py-32 overflow-hidden">
+            <div className="max-w-[100rem] mx-auto px-4 sm:px-12 lg:px-20">
                 {/* Header row */}
                 <div className="flex flex-col items-center text-center mb-24">
                     <motion.div
@@ -80,8 +80,8 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
                     >
-                        <p className="text-2xs text-stone uppercase tracking-mega mb-6 font-sans">Discover</p>
-                        <h2 className="text-display-3 md:text-display-2 font-display text-charcoal mb-12">{title}</h2>
+                        <p className="text-2xs text-stone uppercase tracking-mega mb-4 sm:mb-6 font-sans">Discover</p>
+                        <h2 className="text-4xl xs:text-5xl md:text-display-2 font-display text-charcoal mb-8 sm:mb-12">{title}</h2>
                     </motion.div>
 
                     {/* Minimal Category Links */}
@@ -91,7 +91,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.3, duration: 1 }}
-                            className="flex flex-wrap justify-center gap-8 md:gap-12"
+                            className="flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-12"
                         >
                             {categories.map((cat) => (
                                 <button
@@ -113,7 +113,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
 
                 {/* Grid - Asymmetrical staggered layout */}
                 {isLoading ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-8 lg:gap-x-16 gap-y-24">
+                    <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 sm:gap-x-8 lg:gap-x-16 gap-y-12 sm:gap-y-24">
                         {Array.from({ length: limit ?? 8 }).map((_, i) => (
                             <div key={i} className={i % 2 !== 0 ? "lg:mt-16" : ""}>
                                 <SkeletonCard />
@@ -131,7 +131,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
                                 transition: { staggerChildren: 0.15 }
                             }
                         }}
-                        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 lg:gap-x-12 gap-y-20 lg:gap-y-32"
+                        className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-4 sm:gap-x-6 lg:gap-x-12 gap-y-12 sm:gap-y-20 lg:gap-y-32"
                     >
                         {displayProducts.map((product, i) => (
                             <motion.div

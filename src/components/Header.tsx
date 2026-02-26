@@ -89,7 +89,7 @@ const Header: React.FC = () => {
                 transition={{ duration: 0.8, ease: [0.7, 0, 0.3, 1] }}
                 className={cn(
                     "w-full z-50 transition-colors duration-500",
-                    isTransparent ? "absolute top-0 bg-black" : "sticky top-0 bg-cream/95 backdrop-blur-md border-b border-charcoal/5"
+                    isTransparent ? "absolute top-0 !bg-charcoal md:!bg-transparent" : "sticky top-0 bg-cream/95 backdrop-blur-md border-b border-charcoal/5"
                 )}
             >
                 <div className="max-w-[90rem] mx-auto px-6 lg:px-12">

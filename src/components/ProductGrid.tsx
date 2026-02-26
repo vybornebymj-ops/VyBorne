@@ -15,7 +15,7 @@ interface ProductGridProps {
     showViewAll?: boolean;
 }
 
-const categories = ['All', 'Dresses', 'Tops', 'Co-ords', 'Sarees', 'Accessories'];
+const categories = ['All', 'Dresses', 'Tops', 'Co-ords', 'Accessories'];
 
 /* ── Skeleton Card ───────────────────────────────────── */
 const SkeletonCard: React.FC = () => (
@@ -70,7 +70,7 @@ const ProductGrid: React.FC<ProductGridProps> = ({
     }
 
     return (
-        <section id="shop" className="w-full bg-cream py-20 sm:py-32 overflow-hidden">
+        <section id="shop" className="w-full bg-cream py-16 sm:py-24 lg:py-32 overflow-hidden">
             <div className="max-w-[100rem] mx-auto px-4 sm:px-12 lg:px-20">
                 {/* Header row */}
                 <div className="flex flex-col items-center text-center mb-24">

@@ -11,7 +11,7 @@ const items = [
 
 const TrustBar: React.FC = () => {
     return (
-        <section className="bg-cream py-32 border-t border-charcoal/5">
+        <section className="bg-cream py-16 lg:py-32 border-t border-charcoal/5">
             <div className="max-w-[90rem] mx-auto px-6 sm:px-12 lg:px-20">
                 <motion.div
                     initial="hidden"
@@ -23,7 +23,7 @@ const TrustBar: React.FC = () => {
                             transition: { staggerChildren: 0.1 }
                         }
                     }}
-                    className="grid grid-cols-2 lg:grid-cols-4 gap-16 lg:gap-8"
+                    className="grid grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-16"
                 >
                     {items.map((item, i) => (
                         <motion.div

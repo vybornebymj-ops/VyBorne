@@ -3,34 +3,11 @@ import { FiShoppingBag, FiMenu, FiX, FiSearch, FiUser, FiHeart } from 'react-ico
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
-import logo from '../assets/logo.png';
 import LoginModal from './LoginModal';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../lib/utils';
 
-/* ── Announcement Bar ─────────────────────────────────── */
-const AnnouncementBar: React.FC<{ onDismiss: () => void }> = ({ onDismiss }) => (
-    <motion.div
-        initial={{ height: 0, opacity: 0 }}
-        animate={{ height: 'auto', opacity: 1 }}
-        exit={{ height: 0, opacity: 0 }}
-        transition={{ duration: 0.5, ease: [0.7, 0, 0.3, 1] }}
-        className="bg-charcoal text-cream text-center text-2xs tracking-mega uppercase py-2.5 px-10 relative font-sans overflow-hidden"
-    >
-        <div className="flex items-center justify-center gap-3 sm:gap-6 opacity-90 transition-all duration-300">
-            <span className="whitespace-nowrap">Free shipping over ₹999</span>
-            <span className="text-stone hidden xs:inline">·</span>
-            <span className="whitespace-nowrap hidden xs:inline">Sustainable & Ethically Made</span>
-        </div>
-        <button
-            onClick={onDismiss}
-            className="absolute right-4 top-1/2 -translate-y-1/2 text-cream/50 hover:text-cream transition-colors"
-            aria-label="Dismiss"
-        >
-            <FiX size={14} />
-        </button>
-    </motion.div>
-);
+
 
 /* ── Header ───────────────────────────────────────────── */
 const Header: React.FC = () => {
@@ -39,7 +16,6 @@ const Header: React.FC = () => {
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [isScrolled, setIsScrolled] = useState(false);
-    const [showAnnouncement, setShowAnnouncement] = useState(true);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
 
     const searchRef = useRef<HTMLInputElement>(null);
@@ -90,20 +66,22 @@ const Header: React.FC = () => {
         }
     };
 
-    const navLinks = [
+    const primaryLinks = [
         { name: 'Home', href: '/' },
         { name: 'Shop', href: '/shop' },
-        { name: 'About', href: '/about' },
-        { name: 'Contact', href: '#contact' },
     ];
+
+    const secondaryLinks = [
+        { name: 'About', href: '/about' },
+        { name: 'Contact', href: '/contact' },
+    ];
+
+    const allLinks = [...primaryLinks, ...secondaryLinks];
 
     const isTransparent = isHome && !isScrolled && !isMobileMenuOpen;
 
     return (
         <>
-            <AnimatePresence>
-                {showAnnouncement && <AnnouncementBar onDismiss={() => setShowAnnouncement(false)} />}
-            </AnimatePresence>
 
             <motion.header
                 initial={{ y: -100 }}
@@ -115,79 +93,77 @@ const Header: React.FC = () => {
                 )}
             >
                 <div className="max-w-[90rem] mx-auto px-6 lg:px-12">
-                    <div className="flex justify-between items-center h-24">
+                    <div className="flex justify-between items-center h-20 md:h-24 relative">
 
-                        {/* Logo - Left */}
-                        <div className="flex-1 flex justify-start">
-                            <Link to="/" className="flex-shrink-0 group">
-                                <img
-                                    src={logo}
-                                    alt="VyBorne"
-                                    className={cn(
-                                        "h-8 md:h-10 w-auto transition-all duration-700 group-hover:opacity-70",
-                                        isTransparent ? 'invert grayscale contrast-200' : ''
-                                    )}
-                                />
+                        {/* Left Section: Mobile Hamburger OR Desktop Logo */}
+                        <div className="flex-1 flex justify-start items-center relative z-50">
+                            {/* Mobile Hamburger */}
+                            <button
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                className={cn("md:hidden p-1 transition-opacity hover:opacity-50", isTransparent && !isMobileMenuOpen ? "text-white" : "text-charcoal")}
+                                aria-label="Toggle Menu"
+                            >
+                                {isMobileMenuOpen ? <FiX size={24} strokeWidth={1} /> : <FiMenu size={24} strokeWidth={1} />}
+                            </button>
+
+                            {/* Desktop Logo */}
+                            <Link to="/" className="hidden md:block flex-shrink-0 group">
+                                <span className={cn(
+                                    "text-3xl sm:text-4xl font-serif font-medium tracking-wide transition-colors duration-300",
+                                    isTransparent ? "text-white" : "text-charcoal"
+                                )}>
+                                    VyBorne
+                                </span>
                             </Link>
                         </div>
 
-                        {/* Centered Navigation */}
-                        <nav className="hidden md:flex flex-1 justify-center items-center space-x-12">
-                            {navLinks.map((link) => {
-                                const isActive = location.pathname === link.href;
-                                return (
-                                    <button
-                                        key={link.name}
-                                        onClick={() => handleNavClick(link.href)}
-                                        className={cn(
-                                            "relative text-2xs uppercase tracking-ultra font-medium transition-colors duration-300 group",
-                                            isTransparent ? "text-white/90 hover:text-white" : "text-charcoal/80 hover:text-charcoal"
-                                        )}
-                                    >
-                                        {link.name}
-                                        <span className={cn(
-                                            "absolute -bottom-2 left-0 w-0 h-px transition-all duration-500 group-hover:w-full",
-                                            isActive ? "w-full" : "",
-                                            isTransparent ? "bg-white" : "bg-charcoal"
-                                        )} />
-                                    </button>
-                                );
-                            })}
-                        </nav>
+                        {/* Center Section: Mobile Logo OR Desktop Navigation */}
+                        <div className="flex-[2] flex justify-center items-center pointer-events-auto">
+                            {/* Mobile Logo */}
+                            <Link to="/" className="md:hidden flex-shrink-0 group flex justify-center mt-1">
+                                <span className={cn(
+                                    "text-3xl font-serif font-medium tracking-wide transition-colors duration-300",
+                                    isTransparent ? "text-white" : "text-charcoal"
+                                )}>
+                                    VyBorne
+                                </span>
+                            </Link>
+
+                            {/* Desktop Navigation Links */}
+                            <nav className="hidden md:flex items-center space-x-8 lg:space-x-12">
+                                {allLinks.map((link) => {
+                                    const isActive = location.pathname === link.href;
+                                    return (
+                                        <button
+                                            key={link.name}
+                                            onClick={() => handleNavClick(link.href)}
+                                            className={cn(
+                                                "relative text-xs uppercase tracking-widest font-sans font-medium transition-colors duration-300 group",
+                                                isTransparent ? "text-white/90 hover:text-white" : "text-charcoal/80 hover:text-charcoal"
+                                            )}
+                                        >
+                                            {link.name}
+                                            <span className={cn(
+                                                "absolute -bottom-2 left-0 w-0 h-px transition-all duration-500 group-hover:w-full",
+                                                isActive ? "w-full" : "",
+                                                isTransparent ? "bg-white" : "bg-charcoal"
+                                            )} />
+                                        </button>
+                                    );
+                                })}
+                            </nav>
+                        </div>
 
                         {/* Action Icons - Right */}
                         <div className="flex-1 flex justify-end items-center gap-3 xs:gap-5 md:gap-6">
-                            {/* Search */}
-                            <div className="relative flex items-center">
-                                <AnimatePresence>
-                                    {isSearchOpen && (
-                                        <motion.form
-                                            initial={{ opacity: 0, width: 0, x: 20 }}
-                                            animate={{ opacity: 1, width: 'auto', x: 0 }}
-                                            exit={{ opacity: 0, width: 0, x: 20 }}
-                                            transition={{ duration: 0.4, ease: [0.7, 0, 0.3, 1] }}
-                                            onSubmit={handleSearchSubmit}
-                                            className="absolute right-full mr-4 flex"
-                                        >
-                                            <input
-                                                ref={searchRef}
-                                                type="text"
-                                                placeholder="Search"
-                                                value={searchQuery}
-                                                onChange={(e) => setSearchQuery(e.target.value)}
-                                                className="w-48 lg:w-64 pb-1 bg-transparent border-b border-charcoal/20 focus:outline-none focus:border-charcoal text-sm font-sans text-charcoal placeholder-charcoal/40 uppercase tracking-widest text-2xs"
-                                            />
-                                        </motion.form>
-                                    )}
-                                </AnimatePresence>
-                                <button
-                                    aria-label="Toggle Search"
-                                    className={cn("p-1 transition-opacity hover:opacity-50", isTransparent && !isSearchOpen ? "text-white" : "text-charcoal")}
-                                    onClick={() => setIsSearchOpen(!isSearchOpen)}
-                                >
-                                    {isSearchOpen ? <FiX size={20} strokeWidth={1.5} /> : <FiSearch size={20} strokeWidth={1.5} />}
-                                </button>
-                            </div>
+                            {/* Search Icon */}
+                            <button
+                                aria-label="Toggle Search"
+                                className={cn("p-1 transition-opacity hover:opacity-50", isTransparent && !isSearchOpen ? "text-white" : "text-charcoal")}
+                                onClick={() => setIsSearchOpen(!isSearchOpen)}
+                            >
+                                {isSearchOpen ? <FiX size={20} strokeWidth={1.5} /> : <FiSearch size={20} strokeWidth={1.5} />}
+                            </button>
 
                             {/* Wishlist */}
                             <button aria-label="Wishlist" className={cn("p-1 transition-opacity hover:opacity-50 hidden sm:block", isTransparent ? "text-white" : "text-charcoal")}>
@@ -264,17 +240,46 @@ const Header: React.FC = () => {
                                 )}
                             </button>
 
-                            {/* Mobile Hamburger */}
-                            <button
-                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                className={cn("md:hidden p-1 transition-opacity hover:opacity-50 z-50", isTransparent && !isMobileMenuOpen ? "text-white" : "text-charcoal")}
-                                aria-label="Toggle Menu"
-                            >
-                                {isMobileMenuOpen ? <FiX size={24} strokeWidth={1} /> : <FiMenu size={24} strokeWidth={1.5} />}
-                            </button>
                         </div>
                     </div>
                 </div>
+
+                {/* Dropdown Search Overlay */}
+                <AnimatePresence>
+                    {isSearchOpen && (
+                        <motion.div
+                            initial={{ opacity: 0, y: -20 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -20 }}
+                            transition={{ duration: 0.4, ease: [0.7, 0, 0.3, 1] }}
+                            className="absolute top-full left-0 w-full bg-cream border-t border-b border-charcoal/5 shadow-editorial z-40"
+                        >
+                            <div className="max-w-[50rem] mx-auto px-6 py-8">
+                                <form onSubmit={handleSearchSubmit} className="relative flex items-center">
+                                    <FiSearch className="absolute left-4 text-charcoal/50" size={24} />
+                                    <input
+                                        ref={searchRef}
+                                        type="text"
+                                        placeholder="SEARCH FOR STYLES, CATEGORIES..."
+                                        value={searchQuery}
+                                        onChange={(e) => setSearchQuery(e.target.value)}
+                                        className="w-full bg-transparent border-b-2 border-charcoal/20 focus:border-charcoal focus:outline-none py-4 pl-14 pr-12 text-lg sm:text-sidebar font-display text-charcoal placeholder-charcoal/30"
+                                    />
+                                    {searchQuery && (
+                                        <button
+                                            type="button"
+                                            onClick={() => setSearchQuery('')}
+                                            className="absolute right-4 text-charcoal/50 hover:text-charcoal transition-colors"
+                                            aria-label="Clear Search"
+                                        >
+                                            <FiX size={20} />
+                                        </button>
+                                    )}
+                                </form>
+                            </div>
+                        </motion.div>
+                    )}
+                </AnimatePresence>
 
                 {/* Full Screen Mobile Menu */}
                 <AnimatePresence>
@@ -284,17 +289,32 @@ const Header: React.FC = () => {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: '-100%' }}
                             transition={{ duration: 0.6, ease: [0.7, 0, 0.3, 1] }}
-                            className="fixed inset-0 bg-cream z-40 md:hidden pt-24 px-6 pb-8 flex flex-col"
+                            className="fixed inset-0 bg-cream/95 backdrop-blur-md z-40 md:hidden pt-24 px-6 pb-8 flex flex-col"
                         >
-                            <nav className="flex flex-col gap-8 mt-10">
-                                {navLinks.map((link, i) => (
+                            <nav className="flex flex-col gap-6 mt-10">
+                                {primaryLinks.map((link, i) => (
                                     <motion.button
                                         key={link.name}
                                         initial={{ opacity: 0, y: 20 }}
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.2 + (i * 0.1), duration: 0.5 }}
                                         onClick={() => handleNavClick(link.href)}
-                                        className="text-left text-display-3 font-display text-charcoal hover:text-stone transition-colors bg-transparent border-none cursor-pointer leading-none"
+                                        className="text-left text-4xl sm:text-5xl font-display text-charcoal hover:text-stone transition-colors bg-transparent border-none cursor-pointer leading-none"
+                                    >
+                                        {link.name}
+                                    </motion.button>
+                                ))}
+                            </nav>
+
+                            <nav className="flex flex-col gap-4 mt-8">
+                                {secondaryLinks.map((link, i) => (
+                                    <motion.button
+                                        key={link.name}
+                                        initial={{ opacity: 0, y: 20 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        transition={{ delay: 0.4 + (i * 0.1), duration: 0.5 }}
+                                        onClick={() => handleNavClick(link.href)}
+                                        className="text-left text-sm uppercase tracking-widest font-sans text-charcoal/80 hover:text-charcoal transition-colors bg-transparent border-none cursor-pointer"
                                     >
                                         {link.name}
                                     </motion.button>

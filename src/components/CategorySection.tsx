@@ -18,14 +18,6 @@ const categories = [
         image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1200&q=80',
         description: 'Matching sets that redefine contemporary elegance.',
         align: 'right',
-    },
-    {
-        id: 'sarees',
-        name: 'Sarees',
-        tag: 'Ethnic Grace',
-        image: 'https://images.unsplash.com/photo-1583391733956-6c78276477e2?auto=format&fit=crop&w=1200&q=80',
-        description: 'Heritage textiles woven for the modern woman.',
-        align: 'left',
     }
 ];
 
@@ -34,7 +26,7 @@ const CategorySection: React.FC = () => {
         <section className="bg-cream">
             {categories.map((cat, index) => (
                 <div key={cat.id} className="w-full relative min-h-[85vh] lg:min-h-screen flex items-center overflow-hidden border-t border-charcoal/10">
-                    <div className="max-w-[100rem] mx-auto w-full px-6 lg:px-20 py-24 flex flex-col lg:flex-row items-center gap-12 lg:gap-24">
+                    <div className="max-w-[100rem] mx-auto w-full px-6 lg:px-20 py-16 lg:py-24 flex flex-col lg:flex-row items-center gap-8 lg:gap-24">
 
                         {/* Image Block */}
                         <motion.div
@@ -66,7 +58,7 @@ const CategorySection: React.FC = () => {
                             <p className="text-2xs text-stone uppercase tracking-mega mb-6 font-sans">
                                 {String(index + 1).padStart(2, '0')} — {cat.tag}
                             </p>
-                            <h2 className="text-display-3 md:text-display-2 lg:text-display-1 font-display text-charcoal leading-none mb-8">
+                            <h2 className="text-4xl md:text-display-3 lg:text-display-1 font-display text-charcoal leading-none mb-8">
                                 {cat.name}
                             </h2>
                             <p className="text-charcoal/70 font-sans tracking-wide mb-12 max-w-sm">

@@ -47,15 +47,6 @@ const ContactSection: React.FC = () => {
                                 </div>
                             </div>
 
-                            <div className="flex items-start">
-                                <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-gray-50 flex items-center justify-center text-accent">
-                                    <FiMapPin size={20} />
-                                </div>
-                                <div className="ml-4">
-                                    <h4 className="text-base font-medium text-gray-900">Visit Us</h4>
-                                    <p className="mt-1 text-gray-500">3rd Lane, Akkayyapalem, Visakhapatnam, Andhra Pradesh</p>
-                                </div>
-                            </div>
                         </div>
                     </div>
 

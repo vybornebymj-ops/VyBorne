@@ -3,8 +3,6 @@ import Hero from '../components/Hero';
 import TrustBar from '../components/TrustBar';
 import CategorySection from '../components/CategorySection';
 import ProductGrid from '../components/ProductGrid';
-import About from '../components/About';
-import ContactSection from '../components/ContactSection';
 
 const Home: React.FC = () => {
     return (
@@ -13,8 +11,6 @@ const Home: React.FC = () => {
             <TrustBar />
             <ProductGrid limit={8} showViewAll />
             <CategorySection />
-            <About />
-            <ContactSection />
         </>
     );
 };

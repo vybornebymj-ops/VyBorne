@@ -89,7 +89,9 @@ const Header: React.FC = () => {
                 transition={{ duration: 0.8, ease: [0.7, 0, 0.3, 1] }}
                 className={cn(
                     "w-full z-50 transition-colors duration-500",
-                    isTransparent ? "absolute top-0 bg-transparent" : "sticky top-0 bg-cream/95 backdrop-blur-md border-b border-charcoal/5"
+                    isTransparent
+                        ? "absolute top-0 bg-charcoal md:bg-transparent backdrop-blur-md md:backdrop-blur-none border-b border-charcoal/5 md:border-none md:!bg-transparent"
+                        : "sticky top-0 bg-charcoal md:bg-cream/95 backdrop-blur-md border-b border-charcoal/5"
                 )}
             >
                 <div className="max-w-[90rem] mx-auto px-6 lg:px-12">
@@ -100,7 +102,7 @@ const Header: React.FC = () => {
                             {/* Mobile Hamburger */}
                             <button
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                className={cn("md:hidden p-1 transition-opacity hover:opacity-50", isTransparent && !isMobileMenuOpen ? "text-white" : "text-charcoal")}
+                                className={cn("md:hidden p-1 transition-opacity hover:opacity-50 text-white md:text-charcoal")}
                                 aria-label="Toggle Menu"
                             >
                                 {isMobileMenuOpen ? <FiX size={24} strokeWidth={1} /> : <FiMenu size={24} strokeWidth={1} />}
@@ -122,8 +124,7 @@ const Header: React.FC = () => {
                             {/* Mobile Logo */}
                             <Link to="/" className="md:hidden flex-shrink-0 group flex justify-center mt-1">
                                 <span className={cn(
-                                    "text-3xl font-serif font-medium tracking-wide transition-colors duration-300",
-                                    isTransparent ? "text-white" : "text-charcoal"
+                                    "text-3xl font-serif font-medium tracking-wide transition-colors duration-300 text-white"
                                 )}>
                                     VyBorne
                                 </span>
@@ -159,14 +160,14 @@ const Header: React.FC = () => {
                             {/* Search Icon */}
                             <button
                                 aria-label="Toggle Search"
-                                className={cn("p-1 transition-opacity hover:opacity-50", isTransparent && !isSearchOpen ? "text-white" : "text-charcoal")}
+                                className={cn("p-1 transition-opacity hover:opacity-50 text-white md:text-charcoal")}
                                 onClick={() => setIsSearchOpen(!isSearchOpen)}
                             >
                                 {isSearchOpen ? <FiX size={20} strokeWidth={1.5} /> : <FiSearch size={20} strokeWidth={1.5} />}
                             </button>
 
                             {/* Wishlist */}
-                            <button aria-label="Wishlist" className={cn("p-1 transition-opacity hover:opacity-50 hidden sm:block", isTransparent ? "text-white" : "text-charcoal")}>
+                            <button aria-label="Wishlist" className={cn("p-1 transition-opacity hover:opacity-50 hidden sm:block text-white md:text-charcoal")}>
                                 <FiHeart size={20} strokeWidth={1.5} />
                             </button>
 
@@ -176,12 +177,12 @@ const Header: React.FC = () => {
                                     <>
                                         <button
                                             aria-label="Account"
-                                            className={cn("p-1 transition-opacity hover:opacity-50 flex items-center gap-2", isTransparent ? "text-white" : "text-charcoal")}
+                                            className={cn("p-1 transition-opacity hover:opacity-50 flex items-center gap-2 text-white md:text-charcoal")}
                                             onClick={() => setIsProfileOpen(!isProfileOpen)}
                                         >
                                             <div className={cn(
-                                                "w-6 h-6 rounded-full flex items-center justify-center text-2xs font-sans uppercase tracking-widest border",
-                                                isTransparent ? "border-white/30" : "border-charcoal/20 bg-stone/5"
+                                                "w-6 h-6 rounded-full flex items-center justify-center text-2xs font-sans uppercase tracking-widest border border-white/30 md:border-charcoal/20",
+                                                !isTransparent && "md:bg-stone/5"
                                             )}>
                                                 {user.user_metadata?.full_name?.charAt(0) || user.email?.charAt(0) || 'U'}
                                             </div>
@@ -218,7 +219,7 @@ const Header: React.FC = () => {
                                 ) : (
                                     <button
                                         aria-label="Account"
-                                        className={cn("p-1 transition-opacity hover:opacity-50", isTransparent ? "text-white" : "text-charcoal")}
+                                        className={cn("p-1 transition-opacity hover:opacity-50 text-white md:text-charcoal")}
                                         onClick={() => setIsLoginModalOpen(true)}
                                     >
                                         <FiUser size={20} strokeWidth={1.5} />
@@ -229,7 +230,7 @@ const Header: React.FC = () => {
                             {/* Cart */}
                             <button
                                 aria-label="Cart"
-                                className={cn("relative p-1 transition-opacity hover:opacity-50", isTransparent ? "text-white" : "text-charcoal")}
+                                className={cn("relative p-1 transition-opacity hover:opacity-50 text-white md:text-charcoal")}
                                 onClick={toggleCart}
                             >
                                 <FiShoppingBag size={20} strokeWidth={1.5} />

@@ -292,7 +292,7 @@ const Header: React.FC = () => {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: '-100%' }}
                             transition={{ duration: 0.6, ease: [0.7, 0, 0.3, 1] }}
-                            className="fixed inset-0 bg-cream/95 backdrop-blur-md z-40 md:hidden pt-24 px-6 pb-8 flex flex-col"
+                            className="fixed inset-0 bg-charcoal/95 backdrop-blur-md z-40 md:hidden pt-24 px-6 pb-8 flex flex-col"
                         >
                             <nav className="flex flex-col gap-6 mt-10">
                                 {primaryLinks.map((link, i) => (
@@ -302,7 +302,7 @@ const Header: React.FC = () => {
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.2 + (i * 0.1), duration: 0.5 }}
                                         onClick={() => handleNavClick(link.href)}
-                                        className="text-left text-4xl sm:text-5xl font-display text-charcoal hover:text-stone transition-colors bg-transparent border-none cursor-pointer leading-none"
+                                        className="text-left text-4xl sm:text-5xl font-display text-white hover:text-white/70 transition-colors bg-transparent border-none cursor-pointer leading-none"
                                     >
                                         {link.name}
                                     </motion.button>
@@ -317,7 +317,7 @@ const Header: React.FC = () => {
                                         animate={{ opacity: 1, y: 0 }}
                                         transition={{ delay: 0.4 + (i * 0.1), duration: 0.5 }}
                                         onClick={() => handleNavClick(link.href)}
-                                        className="text-left text-sm uppercase tracking-widest font-sans text-charcoal/80 hover:text-charcoal transition-colors bg-transparent border-none cursor-pointer"
+                                        className="text-left text-sm uppercase tracking-widest font-sans text-white/80 hover:text-white transition-colors bg-transparent border-none cursor-pointer"
                                     >
                                         {link.name}
                                     </motion.button>
@@ -336,9 +336,9 @@ const Header: React.FC = () => {
                                         placeholder="Search products..."
                                         value={searchQuery}
                                         onChange={(e) => setSearchQuery(e.target.value)}
-                                        className="flex-1 pb-2 border-b border-charcoal/20 bg-transparent text-charcoal placeholder-charcoal/40 focus:outline-none focus:border-charcoal text-sm uppercase tracking-widest font-sans"
+                                        className="flex-1 pb-2 border-b border-white/20 bg-transparent text-white placeholder-white/40 focus:outline-none focus:border-white text-sm uppercase tracking-widest font-sans"
                                     />
-                                    <button type="submit" className="text-2xs uppercase tracking-ultra text-charcoal">
+                                    <button type="submit" className="text-2xs uppercase tracking-ultra text-white hover:text-white/70">
                                         Go
                                     </button>
                                 </form>

@@ -4,14 +4,38 @@ import { FiInstagram, FiFacebook, FiMessageCircle, FiArrowRight } from 'react-ic
 
 const Footer: React.FC = () => {
     const [email, setEmail] = useState('');
-    const [submitted, setSubmitted] = useState(false);
+    const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
-    const handleNewsletterSubmit = (e: FormEvent) => {
+    const handleNewsletterSubmit = async (e: FormEvent) => {
         e.preventDefault();
-        console.log(`Newsletter subscription for: ${email}`);
-        setSubmitted(true);
-        setEmail('');
-        setTimeout(() => setSubmitted(false), 4000);
+
+        if (!email || !/\S+@\S+\.\S+/.test(email)) {
+            setStatus('error');
+            return;
+        }
+
+        setStatus('loading');
+        try {
+            const response = await fetch('/api/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }),
+            });
+
+            if (response.ok) {
+                setStatus('success');
+                setEmail('');
+                setTimeout(() => setStatus('idle'), 4000);
+            } else {
+                console.error('Subscription failed');
+                setStatus('error');
+            }
+        } catch (error) {
+            console.error('Network error during subscription:', error);
+            setStatus('error');
+        }
     };
 
     return (
@@ -112,26 +136,35 @@ const Footer: React.FC = () => {
                             <p className="text-sm text-cream/50 font-display mb-4 leading-relaxed">
                                 New arrivals, style edits & exclusive offers.
                             </p>
-                            {submitted ? (
+                            {status === 'success' ? (
                                 <p className="text-accent text-sm font-display">Thank you for subscribing! ✦</p>
                             ) : (
-                                <form onSubmit={handleNewsletterSubmit} className="flex flex-col xs:flex-row gap-2">
-                                    <input
-                                        type="email"
-                                        required
-                                        placeholder="Your email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        className="flex-1 bg-cream/5 border border-cream/15 text-cream placeholder-stone/50 px-4 py-2.5 text-sm font-display focus:outline-none focus:border-accent transition-colors w-full"
-                                    />
-                                    <button
-                                        type="submit"
-                                        className="bg-accent hover:bg-accent-dark text-cream px-4 py-2.5 transition-colors flex items-center justify-center"
-                                        aria-label="Subscribe"
-                                    >
-                                        <FiArrowRight size={16} />
-                                    </button>
-                                </form>
+                                <div className="flex flex-col gap-2">
+                                    <form onSubmit={handleNewsletterSubmit} className="flex flex-col xs:flex-row gap-2">
+                                        <input
+                                            type="email"
+                                            required
+                                            placeholder="Your email"
+                                            value={email}
+                                            onChange={(e) => {
+                                                setEmail(e.target.value);
+                                                if (status === 'error') setStatus('idle');
+                                            }}
+                                            className={`flex-1 bg-cream/5 border ${status === 'error' ? 'border-red-500' : 'border-cream/15'} text-cream placeholder-stone/50 px-4 py-2.5 text-sm font-display focus:outline-none focus:border-accent transition-colors w-full`}
+                                        />
+                                        <button
+                                            type="submit"
+                                            disabled={status === 'loading'}
+                                            className={`${status === 'loading' ? 'opacity-70 cursor-not-allowed' : 'hover:bg-accent-dark'} bg-accent text-cream px-4 py-2.5 transition-colors flex items-center justify-center`}
+                                            aria-label="Subscribe"
+                                        >
+                                            <FiArrowRight size={16} />
+                                        </button>
+                                    </form>
+                                    {status === 'error' && (
+                                        <p className="text-xs text-red-400">Please enter a valid email address or try again.</p>
+                                    )}
+                                </div>
                             )}
                         </div>
                     </div>

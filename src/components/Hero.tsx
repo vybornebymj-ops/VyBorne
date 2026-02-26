@@ -23,6 +23,9 @@ const Hero: React.FC = () => {
                 />
                 {/* Hyper-minimal dark gradient overlay to ensure text legibility but keep it stark */}
                 <div className="absolute inset-0 bg-gradient-to-t from-charcoal/90 via-charcoal/30 to-charcoal/40 mix-blend-multiply" />
+
+                {/* Mobile Top Dark Overlay for Header Legibility */}
+                <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-charcoal/80 to-transparent md:hidden pointer-events-none" />
             </motion.div>
 
             {/* Centered Edge-to-Edge Typography */}

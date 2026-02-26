@@ -17,6 +17,7 @@ const Header: React.FC = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [isScrolled, setIsScrolled] = useState(false);
     const [isProfileOpen, setIsProfileOpen] = useState(false);
+    const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
     const searchRef = useRef<HTMLInputElement>(null);
     const { toggleCart, totalItems } = useCart();
@@ -29,8 +30,17 @@ const Header: React.FC = () => {
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 50);
         };
+        const handleResize = () => {
+            setIsMobile(window.innerWidth < 768);
+        };
+
         window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
+        window.addEventListener('resize', handleResize, { passive: true });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            window.removeEventListener('resize', handleResize);
+        };
     }, []);
 
     useEffect(() => {
@@ -89,10 +99,13 @@ const Header: React.FC = () => {
                 transition={{ duration: 0.8, ease: [0.7, 0, 0.3, 1] }}
                 className={cn(
                     "w-full z-50 transition-colors duration-500",
-                    isTransparent
-                        ? "absolute top-0 bg-charcoal md:bg-transparent backdrop-blur-md md:backdrop-blur-none border-b border-charcoal/5 md:border-none md:!bg-transparent"
+                    isTransparent && !isMobile
+                        ? "absolute top-0 md:bg-transparent backdrop-blur-md md:backdrop-blur-none border-b border-charcoal/5 md:border-none md:!bg-transparent"
                         : "sticky top-0 bg-charcoal md:bg-cream/95 backdrop-blur-md border-b border-charcoal/5"
                 )}
+                style={{
+                    backgroundColor: isMobile ? '#0A0A0A' : undefined
+                }}
             >
                 <div className="max-w-[90rem] mx-auto px-6 lg:px-12">
                     <div className="flex justify-between items-center h-20 md:h-24 relative">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { FiMail, FiMapPin, FiPhone, FiSend } from 'react-icons/fi';
+import { FiMail, FiPhone, FiSend } from 'react-icons/fi';
 
 const ContactSection: React.FC = () => {
     return (

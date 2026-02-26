@@ -20,7 +20,7 @@ const NewsletterModal: React.FC = () => {
         localStorage.setItem('newsletter_seen_session', 'true');
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
         // Simple validation
@@ -29,16 +29,31 @@ const NewsletterModal: React.FC = () => {
             return;
         }
 
-        // Mock API call
-        setStatus('success');
+        try {
+            const response = await fetch('/api/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email }),
+            });
 
-        // Persist choice
-        localStorage.setItem('newsletter_subscribed', 'true');
-
-        // Auto close after success message
-        setTimeout(() => {
-            setIsOpen(false);
-        }, 2000);
+            if (response.ok) {
+                setStatus('success');
+                // Persist choice
+                localStorage.setItem('newsletter_subscribed', 'true');
+                // Auto close after success message
+                setTimeout(() => {
+                    setIsOpen(false);
+                }, 2000);
+            } else {
+                console.error('Subscription failed');
+                setStatus('error');
+            }
+        } catch (error) {
+            console.error('Network error during subscription:', error);
+            setStatus('error');
+        }
     };
 
     if (!isOpen) return null;
